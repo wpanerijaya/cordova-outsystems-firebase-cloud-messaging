@@ -1,6 +1,5 @@
-#import "AppDelegate+OSSocialLogins.h"
-
-#import <OSFirebaseCloudMessaging/OSFirebaseCloudMessaging-Swift.h>
+#import "AppDelegate+OSFirebaseCloudMessaging.h"
+#import <OSFirebaseMessagingLib/OSFirebaseMessagingLib-Swift.h>
 #import <objc/runtime.h>
 
 @implementation AppDelegate (OSFirebaseCloudMessaging)
@@ -14,16 +13,9 @@
 - (BOOL)application:(UIApplication *)application swizzledDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self application:application swizzledDidFinishLaunchingWithOptions:launchOptions];
     
-    (void)[SocialLoginsApplicationDelegate.shared application:application didFinishLaunchingWithOptions:launchOptions];
+    (void)[FirebaseMessagingApplicationDelegate.shared application:application didFinishLaunchingWithOptions:launchOptions];
     
     return YES;
-}
-
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    return [SocialLoginsApplicationDelegate.shared
-            application:app
-            openURL:url
-            options:options];
 }
 
 @end

@@ -195,7 +195,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
-@import FirebaseMessaging;
 @import Foundation;
 @import ObjectiveC;
 @import UIKit;
@@ -221,7 +220,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSData;
 
 SWIFT_CLASS("_TtC22OSFirebaseMessagingLib36FirebaseMessagingApplicationDelegate")
-@interface FirebaseMessagingApplicationDelegate : NSObject <FIRMessagingDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate>
+@interface FirebaseMessagingApplicationDelegate : NSObject <UIApplicationDelegate, UNUserNotificationCenterDelegate>
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) FirebaseMessagingApplicationDelegate * _Nonnull shared;)
 + (FirebaseMessagingApplicationDelegate * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)application:(UIApplication * _Nonnull)application didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> * _Nullable)launchOptions SWIFT_WARN_UNUSED_RESULT;
