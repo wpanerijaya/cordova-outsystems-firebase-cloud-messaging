@@ -6,15 +6,30 @@
   <js-module name="OSFirebaseCloudMessaging" src="www/OSFirebaseCloudMessaging.js">
     <clobbers target="cordova.plugins.OSFirebaseCloudMessaging"/>
   </js-module>
+  
   <platform name="ios">
+
+    <!-- Hooks -->
+    <hook type="before_plugin_install" src="hooks/add_cordova_implementation_ios.js"/>
+    <hook type="before_plugin_install" src="hooks/install_prerequisites.js"/>
+    <hook type="after_plugin_add" src="hooks/add_swift_support.js"/>
+
     <config-file parent="/*" target="config.xml">
       <feature name="OSFirebaseCloudMessaging">
         <param name="ios-package" value="OSFirebaseCloudMessaging"/>
       </feature>
     </config-file>
-    <source-file src="src/ios/OSFirebaseCloudMessaging.m"/>
-    <header-file src="src/ios/OSFirebaseCloudMessaging.h"/>
+
+		<!-- iOS Source Files -->
+		<source-file src="src/ios/OSFirebaseCloudMessaging.swift"/>
+    <source-file src="src/ios/CordovaImplementation.swift" />
+    <header-file src="src/ios/AppDelegate+OSFirebaseCloudMessaging.h" />
+    <source-file src="src/ios/AppDelegate+OSFirebaseCloudMessaging.m" />
+    <framework src="src/ios/frameworks/OSCore.xcframework" embed="true" custom="true" />
+    <framework src="src/ios/frameworks/OSFirebaseMessagingLib.xcframework" embed="true" custom="true" />
+
   </platform>
+
   <platform name="android">
     <config-file parent="/*" target="res/xml/config.xml">
       <feature name="OSFirebaseCloudMessaging">
@@ -24,4 +39,5 @@
     <config-file parent="/*" target="AndroidManifest.xml"/>
     <source-file src="src/android/com/outsystems/firebase/cloudmessaging/OSFirebaseCloudMessaging.java" target-dir="src/com/outsystems/firebase/cloudmessaging"/>
   </platform>
+  
 </plugin>

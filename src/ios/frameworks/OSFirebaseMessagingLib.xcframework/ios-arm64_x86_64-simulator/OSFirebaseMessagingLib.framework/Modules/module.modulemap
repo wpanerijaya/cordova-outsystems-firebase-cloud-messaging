@@ -1,0 +1,11 @@
+framework module OSFirebaseMessagingLib {
+  umbrella header "OSFirebaseMessagingLib.h"
+
+  export *
+  module * { export * }
+}
+
+module OSFirebaseMessagingLib.Swift {
+    header "OSFirebaseMessagingLib-Swift.h"
+    requires objc
+}
