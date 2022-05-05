@@ -20,6 +20,19 @@
       </feature>
     </config-file>
 
+    <config-file target="*-Info.plist" parent="UIBackgroundModes">
+      <array>
+        <string>remote-notification</string>
+      </array>
+    </config-file>
+
+    <config-file target="*-Debug.plist" parent="aps-environment">
+      <string>development</string>
+    </config-file>
+    <config-file target="*-Release.plist" parent="aps-environment">
+      <string>production</string>
+    </config-file>
+
 		<!-- iOS Source Files -->
 		<source-file src="src/ios/OSFirebaseCloudMessaging.swift"/>
     <source-file src="src/ios/CordovaImplementation.swift" />
