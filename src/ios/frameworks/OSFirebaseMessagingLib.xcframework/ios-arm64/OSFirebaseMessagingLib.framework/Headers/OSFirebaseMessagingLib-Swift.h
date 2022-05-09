@@ -229,9 +229,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) FirebaseMess
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class UNNotificationRequest;
+@class UNNotificationContent;
 
-SWIFT_CLASS("_TtC22OSFirebaseMessagingLib25OSFirebaseMessagingPlugin")
-@interface OSFirebaseMessagingPlugin : NSObject
+SWIFT_CLASS("_TtC22OSFirebaseMessagingLib19NotificationService")
+@interface NotificationService : UNNotificationServiceExtension
+- (void)didReceiveNotificationRequest:(UNNotificationRequest * _Nonnull)request withContentHandler:(void (^ _Nonnull)(UNNotificationContent * _Nonnull))contentHandler;
+- (void)serviceExtensionTimeWillExpire;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
