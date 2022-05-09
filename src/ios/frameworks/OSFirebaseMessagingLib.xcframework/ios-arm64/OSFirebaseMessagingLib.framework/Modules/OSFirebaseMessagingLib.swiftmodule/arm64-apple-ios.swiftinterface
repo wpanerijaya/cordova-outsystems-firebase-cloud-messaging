@@ -6,9 +6,24 @@ import Swift
 import UIKit
 import UserNotifications
 import _Concurrency
-@objc @_inheritsConvenienceInitializers open class OSFirebaseMessagingPlugin : ObjectiveC.NSObject {
-  @objc override dynamic public init()
-  @objc deinit
+public enum FirebaseMessagingErrors : Swift.Int, Foundation.CustomNSError, Foundation.LocalizedError {
+  case registrationError
+  case subscriptionError
+  case unsubscriptionError
+  case obtainingTokenError
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public typealias CompletionHandlerSubscribe = (Swift.Result<Swift.Bool, OSFirebaseMessagingLib.FirebaseMessagingErrors>) -> Swift.Void
+public typealias CompletionHandler = (Swift.Result<Any?, Swift.Error>) -> Swift.Void
+public protocol FirebaseMessagingProtocol {
+  func callcack(result: Swift.String?, error: OSFirebaseMessagingLib.FirebaseMessagingErrors?)
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class FirebaseMessagingApplicationDelegate : ObjectiveC.NSObject, UIKit.UIApplicationDelegate, UserNotifications.UNUserNotificationCenterDelegate {
   @objc @_Concurrency.MainActor(unsafe) public static let shared: OSFirebaseMessagingLib.FirebaseMessagingApplicationDelegate
@@ -18,3 +33,19 @@ import _Concurrency
   @objc override dynamic public init()
   @objc deinit
 }
+@objc @_inheritsConvenienceInitializers public class NotificationService : UserNotifications.UNNotificationServiceExtension {
+  @objc override dynamic public func didReceive(_ request: UserNotifications.UNNotificationRequest, withContentHandler contentHandler: @escaping (UserNotifications.UNNotificationContent) -> Swift.Void)
+  @objc override dynamic public func serviceExtensionTimeWillExpire()
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers open class FirebaseMessagingController {
+  public func register()
+  public func getToken()
+  public func subscribe(topic: Swift.String)
+  public func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  @objc deinit
+}
+extension OSFirebaseMessagingLib.FirebaseMessagingErrors : Swift.Equatable {}
+extension OSFirebaseMessagingLib.FirebaseMessagingErrors : Swift.Hashable {}
+extension OSFirebaseMessagingLib.FirebaseMessagingErrors : Swift.RawRepresentable {}

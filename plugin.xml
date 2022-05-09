@@ -6,6 +6,8 @@
   <js-module name="OSFirebaseCloudMessaging" src="www/OSFirebaseCloudMessaging.js">
     <clobbers target="cordova.plugins.OSFirebaseCloudMessaging"/>
   </js-module>
+
+  <dependency id="cordova-outsystems-firebase-core" url="https://github.com/OutSystems/cordova-outsystems-firebase-core.git#1.0.0"/>
   
   <platform name="ios">
 
