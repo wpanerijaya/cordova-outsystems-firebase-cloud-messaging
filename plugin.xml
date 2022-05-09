@@ -57,7 +57,7 @@
 
     <source-file src="src/android/com/outsystems/firebase/cloudmessaging/OSFirebaseCloudMessaging.java" target-dir="src/com/outsystems/firebase/cloudmessaging"/>
     <framework src="com.github.OutSystems.os-plugins-base-interface:oscore-android:core-0.0.3@aar" />
-    <framework src="src/android/lib/OSFirebaseMessagingLib-debug.aar">
+    <framework src="src/android/lib/OSFirebaseMessagingLib-debug.aar" />
 
   </platform>
   
