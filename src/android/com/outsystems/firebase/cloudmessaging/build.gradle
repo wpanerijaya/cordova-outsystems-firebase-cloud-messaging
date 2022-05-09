@@ -3,7 +3,6 @@ buildscript {
         google()
         jcenter()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
     }
 
     dependencies {
@@ -12,10 +11,15 @@ buildscript {
     }
 }
 
-dependencies{
-    implementation("com.github.OutSystems.os-plugins-base-interface:oscore-android:core-0.0.3@aar")
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }
 
+dependencies {
+    implementation 'com.github.OutSystems.os-plugins-base-interface:oscore-android:core-0.0.3@aar'
+}
 // use postBuildExtras to make sure the plugin is applied after
 // cdvPluginPostBuildExtras. Therefore if googleServices is added
 // to cdvPluginPostBuildExtras somewhere else, the plugin execution
