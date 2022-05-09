@@ -11,6 +11,9 @@ public enum FirebaseMessagingErrors : Swift.Int, Foundation.CustomNSError, Found
   case subscriptionError
   case unsubscriptionError
   case obtainingTokenError
+  public var description: Swift.String {
+    get
+  }
   public var errorDescription: Swift.String? {
     get
   }
@@ -20,8 +23,12 @@ public enum FirebaseMessagingErrors : Swift.Int, Foundation.CustomNSError, Found
     get
   }
 }
-public typealias CompletionHandlerSubscribe = (Swift.Result<Swift.Bool, OSFirebaseMessagingLib.FirebaseMessagingErrors>) -> Swift.Void
 public typealias CompletionHandler = (Swift.Result<Any?, Swift.Error>) -> Swift.Void
+public protocol MessagingProtocol {
+  func getToken(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  func subscribe(toTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+}
 public protocol FirebaseMessagingProtocol {
   func callcack(result: Swift.String?, error: OSFirebaseMessagingLib.FirebaseMessagingErrors?)
 }
@@ -39,11 +46,19 @@ public protocol FirebaseMessagingProtocol {
   @objc override dynamic public init()
   @objc deinit
 }
-@_hasMissingDesignatedInitializers open class FirebaseMessagingController {
+@_hasMissingDesignatedInitializers public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
+  public func register() throws
+  public func getToken(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  public func subscribe(toTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  public func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  @objc deinit
+}
+@objc open class FirebaseMessagingController : ObjectiveC.NSObject {
+  public init(delegate: OSFirebaseMessagingLib.FirebaseMessagingProtocol, messaging: OSFirebaseMessagingLib.MessagingProtocol?)
   public func register()
   public func getToken()
   public func subscribe(topic: Swift.String)
-  public func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  public func unsubscribe(fromTopic topic: Swift.String)
   @objc deinit
 }
 extension OSFirebaseMessagingLib.FirebaseMessagingErrors : Swift.Equatable {}
