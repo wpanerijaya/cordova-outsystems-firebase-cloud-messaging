@@ -229,6 +229,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) FirebaseMess
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+
+SWIFT_CLASS("_TtC22OSFirebaseMessagingLib27FirebaseMessagingController")
+@interface FirebaseMessagingController : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 @class UNNotificationRequest;
 @class UNNotificationContent;
 
