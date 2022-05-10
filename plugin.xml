@@ -20,6 +20,8 @@
       <feature name="OSFirebaseCloudMessaging">
         <param name="ios-package" value="OSFirebaseCloudMessaging"/>
       </feature>
+      <preference name="deployment-target" value="13" />
+      <preference name="UseSwiftLanguageVersion" value="5" />
     </config-file>
 
     <config-file target="*-Info.plist" parent="UIBackgroundModes">
