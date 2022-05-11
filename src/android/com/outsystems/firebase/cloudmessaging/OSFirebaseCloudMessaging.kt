@@ -37,7 +37,6 @@ class OSFirebaseCloudMessaging(override var callbackContext: CallbackContext?) :
                 val topic = ""
                 controller.unsubscribe(topic)
             }
-            else -> return false
         }
         return true
     }
