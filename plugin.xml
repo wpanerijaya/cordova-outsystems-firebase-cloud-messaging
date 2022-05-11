@@ -61,8 +61,8 @@
     <config-file parent="/*" target="AndroidManifest.xml"/>
 
     <source-file src="src/android/com/outsystems/firebase/cloudmessaging/OSFirebaseCloudMessaging.kt" target-dir="app/src/main/kotlin/com/outsystems/firebase/cloudmessaging"/>
-    <resource-file src="src/android/lib/OSCordova-Android-debug.aar" target="libs/OSCordova-Android-debug.aar" />
-    <resource-file src="src/android/lib/OSFirebaseMessagingLib-debug.aar" target="libs/OSFirebaseMessagingLib-debug.aar" />
+    <resource-file src="src/android/lib/OSCordova-Android-debug.aar" target="app/libs/OSCordova-Android-debug.aar" />
+    <resource-file src="src/android/lib/OSFirebaseMessagingLib-debug.aar" target="app/libs/OSFirebaseMessagingLib-debug.aar" />
     <framework src="src/android/com/outsystems/firebase/cloudmessaging/build.gradle" custom="true" type="gradleReference" />
 
   </platform>
