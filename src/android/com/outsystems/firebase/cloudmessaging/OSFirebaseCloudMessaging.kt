@@ -8,7 +8,9 @@ import com.outsystems.plugins.oscordova.CordovaImplementation
 import org.apache.cordova.CallbackContext
 import org.json.JSONArray
 
-class OSFirebaseCloudMessaging(override var callbackContext: CallbackContext?) : CordovaImplementation() {
+class OSFirebaseCloudMessaging : CordovaImplementation() {
+
+    override var callbackContext: CallbackContext? = null
 
     private val controllerDelegate = object: FirebaseMessagingInterface {
         override fun callbackToken(token: String) {
@@ -25,6 +27,7 @@ class OSFirebaseCloudMessaging(override var callbackContext: CallbackContext?) :
     private val controller = FirebaseMessagingController(controllerDelegate, messaging)
 
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
+        this.callbackContext = callbackContext
         when (action) {
             "getToken" -> {
                 controller.getToken()
