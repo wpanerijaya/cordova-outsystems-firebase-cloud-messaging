@@ -17,8 +17,16 @@ allprojects {
     }
 }
 
+repositories{
+    jcenter()
+    flatDir {
+        dirs 'src/main/libs'
+    }
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: '*.aar')
+    implementation (name:'OSCordova-Android-debug', ext:'aar')
+    implementation (name:'OSFirebaseMessagingLib-debug', ext:'aar')
 
     implementation 'com.github.OutSystems.os-plugins-base-interface:oscore-android:core-0.0.3@aar'
 

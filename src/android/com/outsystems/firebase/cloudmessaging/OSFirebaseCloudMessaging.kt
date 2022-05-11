@@ -4,7 +4,7 @@ import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingCont
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingInterface
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingManager
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingErrors
-import com.outsystems.plugins.sociallogins.CordovaImplementation
+import com.outsystems.plugins.oscordova.CordovaImplementation
 import org.apache.cordova.CallbackContext
 import org.json.JSONArray
 
@@ -39,6 +39,12 @@ class OSFirebaseCloudMessaging(override var callbackContext: CallbackContext?) :
             }
         }
         return true
+    }
+
+    override fun onRequestPermissionResult(requestCode: Int,
+                                           permissions: Array<String>,
+                                           grantResults: IntArray) {
+        TODO("Not yet implemented")
     }
 
     override fun areGooglePlayServicesAvailable(): Boolean {
