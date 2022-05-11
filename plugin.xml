@@ -53,6 +53,9 @@
       <feature name="OSFirebaseCloudMessaging">
         <param name="android-package" value="com.outsystems.firebase.cloudmessaging.OSFirebaseCloudMessaging"/>
       </feature>
+      <preference name="GradlePluginKotlinEnabled" value="true" />
+      <preference name="GradlePluginKotlinCodeStyle" value="official" />
+      <preference name="AndroidXEnabled" value="true"/>
     </config-file>
 
     <config-file parent="/*" target="AndroidManifest.xml"/>
