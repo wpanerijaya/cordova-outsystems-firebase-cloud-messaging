@@ -30,7 +30,7 @@ public protocol MessagingProtocol {
   func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
 }
 public protocol FirebaseMessagingProtocol {
-  func callcack(result: Swift.String?, error: OSFirebaseMessagingLib.FirebaseMessagingErrors?)
+  func callback(result: Swift.String?, error: OSFirebaseMessagingLib.FirebaseMessagingErrors?)
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class FirebaseMessagingApplicationDelegate : ObjectiveC.NSObject, UIKit.UIApplicationDelegate, UserNotifications.UNUserNotificationCenterDelegate {
   @objc @_Concurrency.MainActor(unsafe) public static let shared: OSFirebaseMessagingLib.FirebaseMessagingApplicationDelegate
@@ -40,14 +40,8 @@ public protocol FirebaseMessagingProtocol {
   @objc override dynamic public init()
   @objc deinit
 }
-@objc @_inheritsConvenienceInitializers public class NotificationService : UserNotifications.UNNotificationServiceExtension {
-  @objc override dynamic public func didReceive(_ request: UserNotifications.UNNotificationRequest, withContentHandler contentHandler: @escaping (UserNotifications.UNNotificationContent) -> Swift.Void)
-  @objc override dynamic public func serviceExtensionTimeWillExpire()
-  @objc override dynamic public init()
-  @objc deinit
-}
-@_hasMissingDesignatedInitializers public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
-  public func register() throws
+public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
+  public init()
   public func getToken(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   public func subscribe(toTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   public func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
@@ -55,7 +49,7 @@ public protocol FirebaseMessagingProtocol {
 }
 @objc open class FirebaseMessagingController : ObjectiveC.NSObject {
   public init(delegate: OSFirebaseMessagingLib.FirebaseMessagingProtocol, messaging: OSFirebaseMessagingLib.MessagingProtocol?)
-  public func register()
+  public func requestPermissions()
   public func getToken()
   public func subscribe(topic: Swift.String)
   public func unsubscribe(fromTopic topic: Swift.String)

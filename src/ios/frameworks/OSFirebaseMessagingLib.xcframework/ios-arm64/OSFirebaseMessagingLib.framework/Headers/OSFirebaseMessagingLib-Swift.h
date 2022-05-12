@@ -236,16 +236,6 @@ SWIFT_CLASS("_TtC22OSFirebaseMessagingLib27FirebaseMessagingController")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class UNNotificationRequest;
-@class UNNotificationContent;
-
-SWIFT_CLASS("_TtC22OSFirebaseMessagingLib19NotificationService")
-@interface NotificationService : UNNotificationServiceExtension
-- (void)didReceiveNotificationRequest:(UNNotificationRequest * _Nonnull)request withContentHandler:(void (^ _Nonnull)(UNNotificationContent * _Nonnull))contentHandler;
-- (void)serviceExtensionTimeWillExpire;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
 #endif
