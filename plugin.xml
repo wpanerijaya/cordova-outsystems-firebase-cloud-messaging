@@ -6,6 +6,8 @@
   <js-module name="OSFirebaseCloudMessaging" src="www/OSFirebaseCloudMessaging.js">
     <clobbers target="cordova.plugins.OSFirebaseCloudMessaging"/>
   </js-module>
+
+  <dependency id="cordova-outsystems-firebase-core" url="https://github.com/OutSystems/cordova-outsystems-firebase-core.git#1.0.0"/>
   
   <platform name="ios">
 
@@ -18,6 +20,21 @@
       <feature name="OSFirebaseCloudMessaging">
         <param name="ios-package" value="OSFirebaseCloudMessaging"/>
       </feature>
+      <preference name="deployment-target" value="13" />
+      <preference name="UseSwiftLanguageVersion" value="5" />
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="UIBackgroundModes">
+      <array>
+        <string>remote-notification</string>
+      </array>
+    </config-file>
+
+    <config-file target="*-Debug.plist" parent="aps-environment">
+      <string>development</string>
+    </config-file>
+    <config-file target="*-Release.plist" parent="aps-environment">
+      <string>production</string>
     </config-file>
 
 		<!-- iOS Source Files -->
@@ -31,13 +48,23 @@
   </platform>
 
   <platform name="android">
+
     <config-file parent="/*" target="res/xml/config.xml">
       <feature name="OSFirebaseCloudMessaging">
         <param name="android-package" value="com.outsystems.firebase.cloudmessaging.OSFirebaseCloudMessaging"/>
       </feature>
+      <preference name="GradlePluginKotlinEnabled" value="true" />
+      <preference name="GradlePluginKotlinCodeStyle" value="official" />
+      <preference name="AndroidXEnabled" value="true"/>
     </config-file>
+
     <config-file parent="/*" target="AndroidManifest.xml"/>
-    <source-file src="src/android/com/outsystems/firebase/cloudmessaging/OSFirebaseCloudMessaging.java" target-dir="src/com/outsystems/firebase/cloudmessaging"/>
+
+    <source-file src="src/android/com/outsystems/firebase/cloudmessaging/OSFirebaseCloudMessaging.kt" target-dir="app/src/main/kotlin/com/outsystems/firebase/cloudmessaging"/>
+    <resource-file src="src/android/lib/OSCordova-Android-debug.aar" target="libs/OSCordova-Android-debug.aar" />
+    <resource-file src="src/android/lib/OSFirebaseMessagingLib-debug.aar" target="libs/OSFirebaseMessagingLib-debug.aar" />
+    <framework src="src/android/com/outsystems/firebase/cloudmessaging/build.gradle" custom="true" type="gradleReference" />
+
   </platform>
   
 </plugin>

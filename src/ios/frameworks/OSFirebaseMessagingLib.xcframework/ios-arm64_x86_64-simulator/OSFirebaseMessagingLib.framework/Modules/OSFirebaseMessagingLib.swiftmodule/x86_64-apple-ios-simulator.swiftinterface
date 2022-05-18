@@ -6,15 +6,63 @@ import Swift
 import UIKit
 import UserNotifications
 import _Concurrency
-@objc @_inheritsConvenienceInitializers open class OSFirebaseMessagingPlugin : ObjectiveC.NSObject {
-  @objc override dynamic public init()
-  @objc deinit
+public enum FirebaseMessagingErrors : Swift.Int, Foundation.CustomNSError, Foundation.LocalizedError {
+  case registrationError
+  case subscriptionError
+  case unsubscriptionError
+  case obtainingTokenError
+  case settingBadgeNumberError
+  case gettingBadgeNumberError
+  case requestPermissionsError
+  case permissionsDeniedByUser
+  public var description: Swift.String {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public typealias CompletionHandler = (Swift.Result<Any?, Swift.Error>) -> Swift.Void
+public protocol MessagingProtocol {
+  func getToken(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  func subscribe(toTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+}
+public protocol FirebaseMessagingProtocol {
+  func callback(result: Swift.String?, error: OSFirebaseMessagingLib.FirebaseMessagingErrors?)
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class FirebaseMessagingApplicationDelegate : ObjectiveC.NSObject, UIKit.UIApplicationDelegate, UserNotifications.UNUserNotificationCenterDelegate {
   @objc @_Concurrency.MainActor(unsafe) public static let shared: OSFirebaseMessagingLib.FirebaseMessagingApplicationDelegate
   @_Concurrency.MainActor(unsafe) @objc public func application(_ application: UIKit.UIApplication, didFinishLaunchingWithOptions launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil) -> Swift.Bool
   @_Concurrency.MainActor(unsafe) @objc public func application(_ application: UIKit.UIApplication, didReceiveRemoteNotification userInfo: [Swift.AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIKit.UIBackgroundFetchResult) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) @objc public func userNotificationCenter(_ center: UserNotifications.UNUserNotificationCenter, willPresent notification: UserNotifications.UNNotification, withCompletionHandler completionHandler: (UserNotifications.UNNotificationPresentationOptions) -> Swift.Void)
   @_Concurrency.MainActor(unsafe) @objc public func application(_ application: UIKit.UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Foundation.Data)
   @objc override dynamic public init()
   @objc deinit
 }
+public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
+  public init()
+  public func getToken(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  public func subscribe(toTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  public func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  @objc deinit
+}
+@objc open class FirebaseMessagingController : ObjectiveC.NSObject {
+  public init(delegate: OSFirebaseMessagingLib.FirebaseMessagingProtocol, messaging: OSFirebaseMessagingLib.MessagingProtocol?)
+  public func requestPermission()
+  public func getToken()
+  public func subscribe(topic: Swift.String)
+  public func unsubscribe(fromTopic topic: Swift.String)
+  public func clearNotifications()
+  public func setBadge(badge: Swift.Int)
+  public func getBadge()
+  @objc deinit
+}
+extension OSFirebaseMessagingLib.FirebaseMessagingErrors : Swift.Equatable {}
+extension OSFirebaseMessagingLib.FirebaseMessagingErrors : Swift.Hashable {}
+extension OSFirebaseMessagingLib.FirebaseMessagingErrors : Swift.RawRepresentable {}

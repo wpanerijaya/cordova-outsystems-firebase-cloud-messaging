@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/OSFirebaseMessagingLib-Swift.h</key>
 		<data>
-		YPCM2bGhPT7GrVWCSYuG5MhFyf8=
+		yi+O+urpH+v74VB9UAehR06O1CI=
 		</data>
 		<key>Headers/OSFirebaseMessagingLib.h</key>
 		<data>
@@ -22,11 +22,11 @@
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		NhfHHlPz8wYxiDIvH8HV+5Cl0N4=
+		bENV6IT9jqTeKD93YqRKKyGzCo4=
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		xGu4bPhiJQg7wfOOFhU1WpwXKNE=
+		wZOxVoj3+P0DHZlkbMpU8zImW9k=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -39,7 +39,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			MFgc7NE4xIyVM/FFHfC29ORB919/0I8CRYMg97SXA94=
+			sPNWlCfqNH9pbY0Om0FGbbiO8zz6eYXoA2/HFkg3gW8=
 			</data>
 		</dict>
 		<key>Headers/OSFirebaseMessagingLib.h</key>
@@ -60,14 +60,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZEjulWwROAERTUmxsBeQpHBM+FEx1nIqd/pU3UdZWr0=
+			Zlwal2v+Lu8GagiZDglnrPl2Bw5viFhMuxNNWhM3Au4=
 			</data>
 		</dict>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ug89wkuuhB1MKensPSJUzbC/WXhy0IZ2O0n5hPY+LvY=
+			0i8F0YmTCXopDrCCQ3+oKKJgQulECRvw5U9mADLWbaI=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
