@@ -12,10 +12,6 @@ exports.unsubscribe = function (topic, success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'unsubscribe', [topic]);
 };
 
-exports.requestPermission = function ( success, error) {
-    exec(success, error, 'OSFirebaseCloudMessaging', 'requestPermission');
-};
-
 exports.clearNotifications = function (success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'clearNotifications');
 };
@@ -26,4 +22,12 @@ exports.setBadge = function (badge, success, error) {
 
 exports.getBadge = function (success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'getBadge');
+};
+
+exports.registerDevice = function (success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'registerDevice');
+};
+
+exports.unregisterDevice = function (success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'unregisterDevice');
 };

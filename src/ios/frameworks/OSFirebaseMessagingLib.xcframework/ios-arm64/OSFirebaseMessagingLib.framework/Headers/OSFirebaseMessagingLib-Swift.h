@@ -220,6 +220,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class UNUserNotificationCenter;
 @class UNNotification;
 @class NSData;
+@class UNNotificationResponse;
 
 SWIFT_CLASS("_TtC22OSFirebaseMessagingLib36FirebaseMessagingApplicationDelegate")
 @interface FirebaseMessagingApplicationDelegate : NSObject <UIApplicationDelegate, UNUserNotificationCenterDelegate>
@@ -229,6 +230,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) FirebaseMess
 - (void)application:(UIApplication * _Nonnull)application didReceiveRemoteNotification:(NSDictionary * _Nonnull)userInfo fetchCompletionHandler:(void (^ _Nonnull)(UIBackgroundFetchResult))completionHandler;
 - (void)userNotificationCenter:(UNUserNotificationCenter * _Nonnull)center willPresentNotification:(UNNotification * _Nonnull)notification withCompletionHandler:(SWIFT_NOESCAPE void (^ _Nonnull)(UNNotificationPresentationOptions))completionHandler;
 - (void)application:(UIApplication * _Nonnull)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData * _Nonnull)deviceToken;
+- (void)userNotificationCenter:(UNUserNotificationCenter * _Nonnull)center didReceiveNotificationResponse:(UNNotificationResponse * _Nonnull)response withCompletionHandler:(void (^ _Nonnull)(void))completionHandler;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
