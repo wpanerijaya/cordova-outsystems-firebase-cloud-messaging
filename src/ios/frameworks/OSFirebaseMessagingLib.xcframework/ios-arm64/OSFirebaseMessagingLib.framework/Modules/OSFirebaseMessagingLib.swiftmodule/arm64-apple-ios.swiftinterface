@@ -32,6 +32,7 @@ public enum FirebaseMessagingErrors : Swift.Int, Foundation.CustomNSError, Found
 }
 public typealias CompletionHandler = (Swift.Result<Any?, Swift.Error>) -> Swift.Void
 public protocol MessagingProtocol {
+  func getFirebaseGCMSenderID() -> Swift.String
   func registerDevice(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   func unregisterDevice(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   func getToken(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
@@ -55,13 +56,14 @@ public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
   public init()
   public func registerDevice(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   public func unregisterDevice(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
+  public func getFirebaseGCMSenderID() -> Swift.String
   public func getToken(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   public func subscribe(toTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   public func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers open class FirebaseMessagingController : ObjectiveC.NSObject {
-  convenience public init(delegate: OSFirebaseMessagingLib.FirebaseMessagingProtocol, firebaseManager: OSFirebaseMessagingLib.MessagingProtocol?)
+  convenience public init(delegate: OSFirebaseMessagingLib.FirebaseMessagingProtocol, firebaseManager: OSFirebaseMessagingLib.MessagingManager = MessagingManager())
   public func registerDevice()
   public func unregisterDevice()
   public func getToken()
