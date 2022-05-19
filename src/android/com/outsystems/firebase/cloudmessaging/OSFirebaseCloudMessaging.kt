@@ -15,9 +15,6 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
 
     override var callbackContext: CallbackContext? = null
 
-    private val CHANNEL_ID = "com.outsystems.firebasecloudmessaging"
-    private val KEY = "badge"
-
     private val controllerDelegate = object: FirebaseMessagingInterface {
         override fun callbackBadgeNumber(badgeNumber: Int){
             sendPluginResult(badgeNumber)
@@ -40,18 +37,24 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         this.callbackContext = callbackContext
         when (action) {
             "getToken" -> {
-                //controller.getToken()
-                setBadgeNumber(args)
+                controller.getToken()
             }
             "subscribe" -> {
                 val topic = ""
-                //controller.subscribe(topic)
-                getBadgeNumber()
+                controller.subscribe(topic)
             }
             "unsubscribe" -> {
                 val topic = ""
-                //controller.unsubscribe(topic)
+                controller.unsubscribe(topic)
+            }
+            "clearNotifications" -> {
                 clearNotifications()
+            }
+            "setBadge" -> {
+                setBadgeNumber(args)
+            }
+            "getBadge" -> {
+                getBadgeNumber()
             }
         }
         return true
@@ -72,8 +75,10 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     }
 
     private fun setBadgeNumber(args : JSONArray) {
-        val badge = 3
-        controller.setBadgeNumber(cordova.activity, badge)
+        val badge = args.get(0).toString().toInt()
+        val title = args.get(1).toString()
+        val text = args.get(2).toString()
+        controller.setBadgeNumber(cordova.activity, badge, title, text)
     }
 
     private fun clearNotifications() {
@@ -83,6 +88,5 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     private fun getResourceId(context: Context, typeAndName: String): Int {
         return context.resources.getIdentifier(typeAndName, null, context.packageName)
     }
-
 
 }
