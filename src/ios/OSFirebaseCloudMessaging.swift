@@ -8,13 +8,19 @@ class OSFirebaseCloudMessaging: CordovaImplementation {
     var callbackId:String=""
     
     override func pluginInitialize() {
-        plugin = FirebaseMessagingController(delegate:self, firebaseManager: MessagingManager())
+        plugin = FirebaseMessagingController(delegate:self)
     }
     
     @objc(registerDevice:)
     func registerDevice(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
         self.plugin?.registerDevice()
+    }
+    
+    @objc(unregisterDevice:)
+    func unregisterDevice(command: CDVInvokedUrlCommand) {
+        self.callbackId = command.callbackId
+        self.plugin?.unregisterDevice()
     }
     
     @objc(getToken:)
