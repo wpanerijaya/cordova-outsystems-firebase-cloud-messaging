@@ -1,12 +1,11 @@
 package com.outsystems.firebase.cloudmessaging;
 
-
 import android.content.Context
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingController
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingInterface
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingManager
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseNotificationManager
-import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingErrors
+import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.oscordova.CordovaImplementation
 import org.apache.cordova.CallbackContext
 import org.json.JSONArray
@@ -20,13 +19,16 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     private val KEY = "badge"
 
     private val controllerDelegate = object: FirebaseMessagingInterface {
+        override fun callbackBadgeNumber(badgeNumber: Int){
+            sendPluginResult(badgeNumber)
+        }
         override fun callbackToken(token: String) {
             sendPluginResult(token)
         }
         override fun callbackSuccess() {
             sendPluginResult(true)
         }
-        override fun callbackError(error: FirebaseMessagingErrors) {
+        override fun callbackError(error: FirebaseMessagingError) {
             sendPluginResult(false, Pair(error.code, error.description))
         }
     }
@@ -66,13 +68,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     }
 
     private fun getBadgeNumber() {
-        val badgeNumber = controller.getBadgeNumber(cordova.activity)
-        if(badgeNumber != null){
-            sendPluginResult(badgeNumber, null)
-        }
-        else{
-            sendPluginResult(null, null)
-        }
+        controller.getBadgeNumber(cordova.activity)
     }
 
     private fun setBadgeNumber(args : JSONArray) {
