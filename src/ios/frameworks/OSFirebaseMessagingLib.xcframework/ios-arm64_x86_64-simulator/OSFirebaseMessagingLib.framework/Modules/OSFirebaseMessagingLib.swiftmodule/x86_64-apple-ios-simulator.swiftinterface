@@ -39,17 +39,23 @@ public protocol MessagingProtocol {
   func subscribe(toTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
   func unsubscribe(fromTopic topic: Swift.String, completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
 }
+public class FirebaseConfiguration {
+  public static let googleServicesFileName: Swift.String
+  public init(fileName: Swift.String = googleServicesFileName, bundle: Foundation.Bundle = Bundle.main)
+  public func getGoogleServicesPath() -> Swift.String?
+  @objc deinit
+}
 public protocol FirebaseMessagingProtocol {
   func callback(result: Swift.String?, error: OSFirebaseMessagingLib.FirebaseMessagingErrors?)
 }
-@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class FirebaseMessagingApplicationDelegate : ObjectiveC.NSObject, UIKit.UIApplicationDelegate, UserNotifications.UNUserNotificationCenterDelegate {
+@objc @_Concurrency.MainActor(unsafe) public class FirebaseMessagingApplicationDelegate : ObjectiveC.NSObject, UIKit.UIApplicationDelegate, UserNotifications.UNUserNotificationCenterDelegate {
   @objc @_Concurrency.MainActor(unsafe) public static let shared: OSFirebaseMessagingLib.FirebaseMessagingApplicationDelegate
+  @_Concurrency.MainActor(unsafe) public init(firebaseConfiguration: OSFirebaseMessagingLib.FirebaseConfiguration = FirebaseConfiguration())
   @_Concurrency.MainActor(unsafe) @objc public func application(_ application: UIKit.UIApplication, didFinishLaunchingWithOptions launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil) -> Swift.Bool
   @_Concurrency.MainActor(unsafe) @objc public func application(_ application: UIKit.UIApplication, didReceiveRemoteNotification userInfo: [Swift.AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIKit.UIBackgroundFetchResult) -> Swift.Void)
   @_Concurrency.MainActor(unsafe) @objc public func userNotificationCenter(_ center: UserNotifications.UNUserNotificationCenter, willPresent notification: UserNotifications.UNNotification, withCompletionHandler completionHandler: (UserNotifications.UNNotificationPresentationOptions) -> Swift.Void)
   @_Concurrency.MainActor(unsafe) @objc public func application(_ application: UIKit.UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Foundation.Data)
   @_Concurrency.MainActor(unsafe) @objc public func userNotificationCenter(_ center: UserNotifications.UNUserNotificationCenter, didReceive response: UserNotifications.UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void)
-  @objc override dynamic public init()
   @objc deinit
 }
 public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
