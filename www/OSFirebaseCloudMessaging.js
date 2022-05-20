@@ -21,7 +21,11 @@ exports.clearNotifications = function (success, error) {
 };
 
 exports.setBadge = function (badge, success, error) {
-    exec(success, error, 'OSFirebaseCloudMessaging', 'setBadge', [badge]);
+    exec(success, error, 'OSFirebaseCloudMessaging', 'setBadge', [badge, title, body]);
+};
+
+exports.sendLocalNotification = function (badge, title, body, success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'sendLocalNotification', [badge, title, body]);
 };
 
 exports.getBadge = function (success, error) {
