@@ -22,11 +22,11 @@
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		YTU5hZvDHfWYbJcHUCyqfM3KX1U=
+		EnTG7nZgQ0XZIKyojwW+1gqMa9s=
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		RsOH9xNKQ5vsMlk9QilqiEZHiBo=
+		BbLPyCxprS72XzObUKtoiJp0cnA=
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		3W68xcwwVoiz7UK+5ZpxwO0WrUY=
+		Oca0Kv3aF5YUwIL0BpQ56l310vI=
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		ukK8PTck9V7xc7PKU0jTghrvHOI=
+		5aEWPozn3wtmC4yvfq/eReXGgH4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -72,14 +72,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vNYrAriPcN60GAAa5b6/u8zsC2lhlUfSO1MWW5THPBg=
+			+wNNR3xLyfEjpvGvv+LsNcJibfCnw/lTw8/hFup7+OI=
 			</data>
 		</dict>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			flLp/iBOJoiCZsdeWWqP/LmxgxIKAEgex8haexaXe4k=
+			pqEjhOJ+wXRow3Fg47sB+zt3h6SmWaxZzFhipkYbg3c=
 			</data>
 		</dict>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -93,14 +93,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			h1Hg6WjXksxOSR2tIFColcDuKtcaiOpv7qJLVn6u3qM=
+			oElwN29JaDpujVViFqNnxi/FWB7NTI4ncJETyXDoYig=
 			</data>
 		</dict>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			y/Kvs9D6YEqkOk33emjE5nzvu3hmtj3HmYsRB01RrKo=
+			wT5S8znxfCXtiQDTiFpKlVm88AZe3nlV/3Q21ZM4DsU=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

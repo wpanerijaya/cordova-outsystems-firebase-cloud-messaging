@@ -31,3 +31,7 @@ exports.registerDevice = function (success, error) {
 exports.unregisterDevice = function (success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'unregisterDevice');
 };
+
+exports.sendLocalNotification = function (badge, title, body, success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'sendLocalNotification', [badge, title, body]);
+};
