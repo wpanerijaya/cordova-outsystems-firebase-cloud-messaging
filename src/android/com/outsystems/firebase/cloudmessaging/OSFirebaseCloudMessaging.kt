@@ -1,10 +1,10 @@
 package com.outsystems.firebase.cloudmessaging;
 
-import android.content.Context
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingController
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingInterface
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingManager
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseNotificationManager
+import com.outsystems.plugins.firebasemessaging.controller.NotificationHelper
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.oscordova.CordovaImplementation
 import org.apache.cordova.CallbackContext
@@ -29,8 +29,9 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             sendPluginResult(false, Pair(error.code, error.description))
         }
     }
+    private val notificationHelper = NotificationHelper()
     private val messaging = FirebaseMessagingManager()
-    private val fbNotificationManager = FirebaseNotificationManager()
+    private val fbNotificationManager = FirebaseNotificationManager(notificationHelper)
     private val controller = FirebaseMessagingController(controllerDelegate, messaging, fbNotificationManager)
 
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
@@ -50,8 +51,11 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             "clearNotifications" -> {
                 clearNotifications()
             }
+            "sendLocalNotification" -> {
+                sendLocalNotification(args)
+            }
             "setBadge" -> {
-                setBadgeNumber(args)
+                setBadgeNumber()
             }
             "getBadge" -> {
                 getBadgeNumber()
@@ -74,19 +78,19 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         controller.getBadgeNumber(cordova.activity)
     }
 
-    private fun setBadgeNumber(args : JSONArray) {
+    private fun sendLocalNotification(args : JSONArray) {
         val badge = args.get(0).toString().toInt()
         val title = args.get(1).toString()
         val text = args.get(2).toString()
-        controller.setBadgeNumber(cordova.activity, badge, title, text)
+        controller.sendLocalNotification(cordova.activity, badge, title, text)
     }
 
     private fun clearNotifications() {
         controller.clearNotifications(cordova.activity)
     }
 
-    private fun getResourceId(context: Context, typeAndName: String): Int {
-        return context.resources.getIdentifier(typeAndName, null, context.packageName)
+    private fun setBadgeNumber() {
+        controller.setBadgeNumber()
     }
 
 }
