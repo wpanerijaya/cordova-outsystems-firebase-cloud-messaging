@@ -21,7 +21,7 @@ exports.clearNotifications = function (success, error) {
 };
 
 exports.setBadge = function (badge, success, error) {
-    exec(success, error, 'OSFirebaseCloudMessaging', 'setBadge', [badge, title, body]);
+    exec(success, error, 'OSFirebaseCloudMessaging', 'setBadge', [badge]);
 };
 
 exports.sendLocalNotification = function (badge, title, body, channelName, channelDescription, success, error) {
