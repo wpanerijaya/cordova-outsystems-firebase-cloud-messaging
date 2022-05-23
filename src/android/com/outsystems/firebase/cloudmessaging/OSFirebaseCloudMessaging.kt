@@ -26,7 +26,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             sendPluginResult(true)
         }
         override fun callbackError(error: FirebaseMessagingError) {
-            sendPluginResult(false, Pair(error.code, error.description))
+            sendPluginResult(null, Pair(error.code, error.description))
         }
     }
     private val notificationHelper = NotificationHelper()
@@ -82,7 +82,9 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         val badge = args.get(0).toString().toInt()
         val title = args.get(1).toString()
         val text = args.get(2).toString()
-        controller.sendLocalNotification(cordova.activity, badge, title, text)
+        val channelName = args.get(3).toString()
+        val channelDescription = args.get(4).toString()
+        controller.sendLocalNotification(cordova.activity, badge, title, text, channelName, channelDescription)
     }
 
     private fun clearNotifications() {

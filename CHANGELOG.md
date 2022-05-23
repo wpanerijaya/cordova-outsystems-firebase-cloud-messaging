@@ -8,6 +8,11 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## 23-05-2022
+- Includes channel info in sendLocalNotification for Android (https://outsystemsrd.atlassian.net/browse/RMET-1561)
+
+## 20-05-2022
 - Implements sendLocalNotification (that used to be setBadgeNumber)
 
+## 18-05-2022
 - Implements setBadge, getBadge and clearNotifications for Android (https://outsystemsrd.atlassian.net/browse/RMET-1561, https://outsystemsrd.atlassian.net/browse/RMET-1576, https://outsystemsrd.atlassian.net/browse/RMET-1557)
