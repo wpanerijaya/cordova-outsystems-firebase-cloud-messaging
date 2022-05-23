@@ -24,8 +24,8 @@ exports.setBadge = function (badge, success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'setBadge', [badge, title, body]);
 };
 
-exports.sendLocalNotification = function (badge, title, body, success, error) {
-    exec(success, error, 'OSFirebaseCloudMessaging', 'sendLocalNotification', [badge, title, body]);
+exports.sendLocalNotification = function (badge, title, body, channelName, channelDescription, success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'sendLocalNotification', [badge, title, body, channelName, channelDescription]);
 };
 
 exports.getBadge = function (success, error) {
