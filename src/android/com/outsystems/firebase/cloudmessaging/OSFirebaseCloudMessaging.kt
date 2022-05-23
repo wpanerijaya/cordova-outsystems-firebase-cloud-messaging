@@ -26,7 +26,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             sendPluginResult(true)
         }
         override fun callbackError(error: FirebaseMessagingError) {
-            sendPluginResult(false, Pair(error.code, error.description))
+            sendPluginResult(null, Pair(error.code, error.description))
         }
     }
     private val notificationHelper = NotificationHelper()
