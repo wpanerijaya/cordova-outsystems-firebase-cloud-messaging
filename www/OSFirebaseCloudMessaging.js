@@ -31,3 +31,15 @@ exports.sendLocalNotification = function (badge, title, body, success, error) {
 exports.getBadge = function (success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'getBadge');
 };
+
+exports.registerDevice = function (success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'registerDevice');
+};
+
+exports.unregisterDevice = function (success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'unregisterDevice');
+};
+
+exports.sendLocalNotification = function (badge, title, body, success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'sendLocalNotification', [badge, title, body]);
+};
