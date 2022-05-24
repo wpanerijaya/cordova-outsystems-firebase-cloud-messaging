@@ -6,57 +6,72 @@ import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingMana
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseNotificationManager
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.oscordova.CordovaImplementation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.apache.cordova.CallbackContext
 import org.json.JSONArray
-
 
 class OSFirebaseCloudMessaging : CordovaImplementation() {
 
     override var callbackContext: CallbackContext? = null
 
     private val controllerDelegate = object: FirebaseMessagingInterface {
-        override fun callbackBadgeNumber(badgeNumber: Int){
-            sendPluginResult(badgeNumber)
-        }
-        override fun callbackToken(token: String) {
+        override fun callback(token: String) {
             sendPluginResult(token)
         }
         override fun callbackSuccess() {
             sendPluginResult(true)
         }
+        override fun callbackBadgeNumber(number: Int) {
+            TODO("Not yet implemented")
+        }
         override fun callbackError(error: FirebaseMessagingError) {
             sendPluginResult(null, Pair(error.code, error.description))
         }
     }
-    private val messaging = FirebaseMessagingManager()
-    private val fbNotificationManager = FirebaseNotificationManager()
-    private val controller = FirebaseMessagingController(controllerDelegate, messaging, fbNotificationManager)
+    private val messagingManager = FirebaseMessagingManager()
+    private val notificationManager = FirebaseNotificationManager()
+    private val controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
 
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
         this.callbackContext = callbackContext
-        when (action) {
-            "getToken" -> {
-                controller.getToken()
-            }
-            "subscribe" -> {
-                val topic = ""
-                controller.subscribe(topic)
-            }
-            "unsubscribe" -> {
-                val topic = ""
-                controller.unsubscribe(topic)
-            }
-            "clearNotifications" -> {
-                clearNotifications()
-            }
-            "sendLocalNotification" -> {
-                sendLocalNotification(args)
-            }
-            "setBadge" -> {
-                setBadgeNumber()
-            }
-            "getBadge" -> {
-                getBadgeNumber()
+        CoroutineScope(Default).launch {
+            when (action) {
+                "getToken" -> {
+                    controller.getToken()
+                }
+                "subscribe" -> {
+                    args.getString(0)?.let { topic ->
+                        controller.subscribe(topic)
+                    }
+                }
+                "unsubscribe" -> {
+                    args.getString(0)?.let { topic ->
+                        controller.unsubscribe(topic)
+                    }
+                }
+                "registerDevice" -> {
+                    controller.registerDevice()
+                }
+                "unregisterDevice" -> {
+                    controller.unregisterDevice()
+                }
+                "clearNotifications" -> {
+                    clearNotifications()
+                }
+                "sendLocalNotification" -> {
+                    sendLocalNotification(args)
+                }
+                "setBadge" -> {
+                    setBadgeNumber()
+                }
+                "getBadge" -> {
+                    getBadgeNumber()
+                }
+                else -> {}
             }
         }
         return true
@@ -92,5 +107,4 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     private fun setBadgeNumber() {
         controller.setBadgeNumber()
     }
-
 }
