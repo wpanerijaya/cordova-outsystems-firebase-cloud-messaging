@@ -4,8 +4,13 @@ import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingCont
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingInterface
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingManager
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseNotificationManager
-import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingErrors
+import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.oscordova.CordovaImplementation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.apache.cordova.CallbackContext
 import org.json.JSONArray
 
@@ -20,7 +25,10 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         override fun callbackSuccess() {
             sendPluginResult(true)
         }
-        override fun callbackError(error: FirebaseMessagingErrors) {
+        override fun callbackBadgeNumber(number: Int) {
+            TODO("Not yet implemented")
+        }
+        override fun callbackError(error: FirebaseMessagingError) {
             sendPluginResult(false, Pair(error.code, error.description))
         }
     }
@@ -30,25 +38,28 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
 
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
         this.callbackContext = callbackContext
-        when (action) {
-            "getToken" -> {
-                controller.getToken()
-            }
-            "subscribe" -> {
-                args.getString(0)?.let { topic ->
-                    controller.subscribe(topic)
+        CoroutineScope(Default).launch {
+            when (action) {
+                "getToken" -> {
+                    controller.getToken()
                 }
-            }
-            "unsubscribe" -> {
-                args.getString(0)?.let { topic ->
-                    controller.unsubscribe(topic)
+                "subscribe" -> {
+                    args.getString(0)?.let { topic ->
+                        controller.subscribe(topic)
+                    }
                 }
-            }
-            "registerDevice" -> {
-                controller.registerDevice()
-            }
-            "unregisterDevice" -> {
-                controller.unregisterDevice()
+                "unsubscribe" -> {
+                    args.getString(0)?.let { topic ->
+                        controller.unsubscribe(topic)
+                    }
+                }
+                "registerDevice" -> {
+                    controller.registerDevice()
+                }
+                "unregisterDevice" -> {
+                    controller.unregisterDevice()
+                }
+                else -> {}
             }
         }
         return true
