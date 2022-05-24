@@ -59,6 +59,18 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
                 "unregisterDevice" -> {
                     controller.unregisterDevice()
                 }
+                "clearNotifications" -> {
+                    clearNotifications()
+                }
+                "sendLocalNotification" -> {
+                    sendLocalNotification(args)
+                }
+                "setBadge" -> {
+                    setBadgeNumber()
+                }
+                "getBadge" -> {
+                    getBadgeNumber()
+                }
                 else -> {}
             }
         }
