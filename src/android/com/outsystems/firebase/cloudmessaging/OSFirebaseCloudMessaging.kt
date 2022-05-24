@@ -4,7 +4,6 @@ import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingCont
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingInterface
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingManager
 import com.outsystems.plugins.firebasemessaging.controller.FirebaseNotificationManager
-import com.outsystems.plugins.firebasemessaging.controller.NotificationHelper
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.oscordova.CordovaImplementation
 import org.apache.cordova.CallbackContext
@@ -29,9 +28,8 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             sendPluginResult(null, Pair(error.code, error.description))
         }
     }
-    private val notificationHelper = NotificationHelper()
     private val messaging = FirebaseMessagingManager()
-    private val fbNotificationManager = FirebaseNotificationManager(notificationHelper)
+    private val fbNotificationManager = FirebaseNotificationManager()
     private val controller = FirebaseMessagingController(controllerDelegate, messaging, fbNotificationManager)
 
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
@@ -75,7 +73,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     }
 
     private fun getBadgeNumber() {
-        controller.getBadgeNumber(cordova.activity)
+        controller.getBadgeNumber()
     }
 
     private fun sendLocalNotification(args : JSONArray) {
