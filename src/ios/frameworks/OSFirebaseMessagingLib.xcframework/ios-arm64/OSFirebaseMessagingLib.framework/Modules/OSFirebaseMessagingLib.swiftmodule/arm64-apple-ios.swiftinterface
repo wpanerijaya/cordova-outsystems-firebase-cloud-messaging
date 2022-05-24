@@ -31,7 +31,7 @@ public enum FirebaseMessagingErrors : Swift.Int, Foundation.CustomNSError, Found
     get
   }
 }
-public typealias CompletionHandler = (Swift.Result<Any?, Swift.Error>) -> Swift.Void
+public typealias CompletionHandler = (Swift.Result<Swift.String?, Swift.Error>) -> Swift.Void
 public protocol MessagingProtocol {
   func getGeneralTopic() -> Swift.String
   func getToken(completion: @escaping OSFirebaseMessagingLib.CompletionHandler)
@@ -58,6 +58,21 @@ public protocol FirebaseMessagingProtocol {
   @_Concurrency.MainActor(unsafe) @objc public func userNotificationCenter(_ center: UserNotifications.UNUserNotificationCenter, didReceive response: UserNotifications.UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void)
   @objc deinit
 }
+extension UserNotifications.UNUserNotificationCenter {
+  
+  #if compiler(>=5.3) && $AsyncAwait
+  public func sendLocalNotification(title: Swift.String, body: Swift.String, badge: Swift.Int) async -> Swift.Result<Swift.Bool, Swift.Error>
+  #endif
+
+}
+public protocol UIApplicationProtocol {
+  func getBadge() -> Swift.Int
+  func setBadge(badge: Swift.Int)
+}
+extension UIKit.UIApplication : OSFirebaseMessagingLib.UIApplicationProtocol {
+  @_Concurrency.MainActor(unsafe) public func getBadge() -> Swift.Int
+  @_Concurrency.MainActor(unsafe) public func setBadge(badge: Swift.Int)
+}
 public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
   public init()
   public func getGeneralTopic() -> Swift.String
@@ -70,7 +85,6 @@ public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
 @objc @_hasMissingDesignatedInitializers open class FirebaseMessagingController : ObjectiveC.NSObject {
   convenience public init(delegate: OSFirebaseMessagingLib.FirebaseMessagingProtocol, firebaseManager: OSFirebaseMessagingLib.MessagingManager = MessagingManager())
   public func registerDevice()
-  public func unregisterDevice()
   public func getToken()
   public func deleteToken()
   public func subscribe(topic: Swift.String)
@@ -79,6 +93,7 @@ public class MessagingManager : OSFirebaseMessagingLib.MessagingProtocol {
   public func sendLocalNotification(title: Swift.String, body: Swift.String, badge: Swift.Int)
   public func setBadge(badge: Swift.Int)
   public func getBadge()
+  public func unregisterDevice()
   @objc deinit
 }
 extension OSFirebaseMessagingLib.FirebaseMessagingErrors : Swift.Equatable {}
