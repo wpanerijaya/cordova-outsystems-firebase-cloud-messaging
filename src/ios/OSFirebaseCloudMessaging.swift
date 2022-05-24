@@ -34,15 +34,15 @@ class OSFirebaseCloudMessaging: CordovaImplementation {
         self.callbackId = command.callbackId
         self.plugin?.clearNotifications()
     }
-
+    
     @objc(sendLocalNotification:)
     func sendLocalNotification(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
         
         guard
-            let title = command.arguments[0] as? String,
+            let badge = command.arguments[0] as? Int,
             let body = command.arguments[1] as? String,
-            let badge = command.arguments[2] as? Int
+            let title = command.arguments[2] as? String
         else {
             self.sendResult(result: "", error:FirebaseMessagingErrors.settingBadgeNumberError as NSError, callBackID: self.callbackId)
             return
