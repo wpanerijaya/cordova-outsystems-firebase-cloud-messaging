@@ -8,13 +8,19 @@ class OSFirebaseCloudMessaging: CordovaImplementation {
     var callbackId:String=""
     
     override func pluginInitialize() {
-        plugin = FirebaseMessagingController(delegate:self, messaging: MessagingManager())
+        plugin = FirebaseMessagingController(delegate:self)
     }
     
-    @objc(requestPermission:)
-    func requestPermission(command: CDVInvokedUrlCommand) {
+    @objc(registerDevice:)
+    func registerDevice(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
-        self.plugin?.requestPermission()
+        self.plugin?.registerDevice()
+    }
+    
+    @objc(unregisterDevice:)
+    func unregisterDevice(command: CDVInvokedUrlCommand) {
+        self.callbackId = command.callbackId
+        self.plugin?.unregisterDevice()
     }
     
     @objc(getToken:)
@@ -27,6 +33,22 @@ class OSFirebaseCloudMessaging: CordovaImplementation {
     func clearNotifications(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
         self.plugin?.clearNotifications()
+    }
+
+    @objc(sendLocalNotification:)
+    func sendLocalNotification(command: CDVInvokedUrlCommand) {
+        self.callbackId = command.callbackId
+        
+        guard
+            let title = command.arguments[0] as? String,
+            let body = command.arguments[1] as? String,
+            let badge = command.arguments[2] as? Int
+        else {
+            self.sendResult(result: "", error:FirebaseMessagingErrors.settingBadgeNumberError as NSError, callBackID: self.callbackId)
+            return
+        }
+        
+        self.plugin?.sendLocalNotification(title: title, body: body, badge: badge)
     }
     
     @objc(getBadge:)
