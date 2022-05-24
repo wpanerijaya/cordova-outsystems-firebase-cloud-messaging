@@ -29,7 +29,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             TODO("Not yet implemented")
         }
         override fun callbackError(error: FirebaseMessagingError) {
-            sendPluginResult(false, Pair(error.code, error.description))
+            sendPluginResult(null, Pair(error.code, error.description))
         }
     }
     private val messagingManager = FirebaseMessagingManager()
@@ -73,5 +73,26 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
 
     override fun areGooglePlayServicesAvailable(): Boolean {
         TODO("Not yet implemented")
+    }
+
+    private fun getBadgeNumber() {
+        controller.getBadgeNumber()
+    }
+
+    private fun sendLocalNotification(args : JSONArray) {
+        val badge = args.get(0).toString().toInt()
+        val title = args.get(1).toString()
+        val text = args.get(2).toString()
+        val channelName = args.get(3).toString()
+        val channelDescription = args.get(4).toString()
+        controller.sendLocalNotification(cordova.activity, badge, title, text, channelName, channelDescription)
+    }
+
+    private fun clearNotifications() {
+        controller.clearNotifications(cordova.activity)
+    }
+
+    private fun setBadgeNumber() {
+        controller.setBadgeNumber()
     }
 }
