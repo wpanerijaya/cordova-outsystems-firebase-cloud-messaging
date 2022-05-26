@@ -1,9 +1,6 @@
 package com.outsystems.firebase.cloudmessaging;
 
-import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingController
-import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingInterface
-import com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingManager
-import com.outsystems.plugins.firebasemessaging.controller.FirebaseNotificationManager
+import com.outsystems.plugins.firebasemessaging.controller.*
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.oscordova.CordovaImplementation
 import kotlinx.coroutines.CoroutineScope
@@ -12,11 +9,24 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.apache.cordova.CallbackContext
+import org.apache.cordova.CordovaInterface
+import org.apache.cordova.CordovaWebView
 import org.json.JSONArray
 
 class OSFirebaseCloudMessaging : CordovaImplementation() {
 
     override var callbackContext: CallbackContext? = null
+
+    private lateinit var notificationManager : FirebaseNotificationManagerInterface
+    private lateinit var messagingManager : FirebaseMessagingManagerInterface
+    private lateinit var controller : FirebaseMessagingController
+
+    override fun initialize(cordova: CordovaInterface, webView: CordovaWebView) {
+        super.initialize(cordova, webView)
+        notificationManager = FirebaseNotificationManager(cordova.activity)
+        messagingManager = FirebaseMessagingManager()
+        controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
+    }
 
     private val controllerDelegate = object: FirebaseMessagingInterface {
         override fun callback(token: String) {
@@ -32,9 +42,6 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             sendPluginResult(null, Pair(error.code, error.description))
         }
     }
-    private val messagingManager = FirebaseMessagingManager()
-    private val notificationManager = FirebaseNotificationManager()
-    private val controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
 
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
         this.callbackContext = callbackContext
@@ -97,11 +104,11 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         val text = args.get(2).toString()
         val channelName = args.get(3).toString()
         val channelDescription = args.get(4).toString()
-        controller.sendLocalNotification(cordova.activity, badge, title, text, channelName, channelDescription)
+        controller.sendLocalNotification(badge, title, text, channelName, channelDescription)
     }
 
     private fun clearNotifications() {
-        controller.clearNotifications(cordova.activity)
+        controller.clearNotifications()
     }
 
     private fun setBadgeNumber() {
