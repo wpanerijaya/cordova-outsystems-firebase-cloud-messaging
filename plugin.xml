@@ -58,15 +58,7 @@
       <preference name="AndroidXEnabled" value="true"/>
     </config-file>
 
-    <config-file parent="/*" target="AndroidManifest.xml">
-      <service
-            android:name="com.outsystems.plugins.firebasemessaging.controller.FirebaseMessagingReceiveService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-    </config-file>
+    <config-file parent="/*" target="AndroidManifest.xml"/>
 
     <source-file src="src/android/com/outsystems/firebase/cloudmessaging/OSFirebaseCloudMessaging.kt" target-dir="app/src/main/kotlin/com/outsystems/firebase/cloudmessaging"/>
     <resource-file src="src/android/lib/OSCordova-Android-debug.aar" target="libs/OSCordova-Android-debug.aar" />
