@@ -97,11 +97,11 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         val text = args.get(2).toString()
         val channelName = args.get(3).toString()
         val channelDescription = args.get(4).toString()
-        controller.sendLocalNotification(cordova.activity, badge, title, text, channelName, channelDescription)
+        controller.sendLocalNotification(badge, title, text, channelName, channelDescription)
     }
 
     private fun clearNotifications() {
-        controller.clearNotifications(cordova.activity)
+        controller.clearNotifications()
     }
 
     private fun setBadgeNumber() {
