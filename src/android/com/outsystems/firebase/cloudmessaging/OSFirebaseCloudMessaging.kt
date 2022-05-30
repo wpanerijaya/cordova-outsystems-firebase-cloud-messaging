@@ -33,7 +33,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         }
     }
     private val messagingManager = FirebaseMessagingManager()
-    private val notificationManager = FirebaseNotificationManager()
+    private val notificationManager = FirebaseNotificationManager(cordova.activity)
     private val controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
 
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
