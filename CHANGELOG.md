@@ -8,6 +8,9 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## 30-05-2022
+- Added library with Room databse
+
 ## 27-05-2022
 - Updated lib to contain GetToken and OnReceivedNotification
 
