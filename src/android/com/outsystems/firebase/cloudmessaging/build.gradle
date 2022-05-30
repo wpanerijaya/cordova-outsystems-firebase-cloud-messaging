@@ -24,6 +24,8 @@ repositories{
     }
 }
 
+apply plugin: 'kotlin-kapt'
+
 dependencies {
     implementation (name:'OSCordova-Android-debug', ext:'aar')
     implementation (name:'OSFirebaseMessagingLib-debug', ext:'aar')
