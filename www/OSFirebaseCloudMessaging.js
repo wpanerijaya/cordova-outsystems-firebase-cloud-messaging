@@ -35,3 +35,7 @@ exports.registerDevice = function (success, error) {
 exports.unregisterDevice = function (success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'unregisterDevice');
 };
+
+exports.getPendingNotifications = function (clearFromDatabase, success, error) {
+    exec(success, error, 'OSFirebaseCloudMessaging', 'getPendingNotifications', [clearFromDatabase]);
+};
