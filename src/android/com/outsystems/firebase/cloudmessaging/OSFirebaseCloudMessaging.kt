@@ -5,9 +5,7 @@ import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.oscordova.CordovaImplementation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.apache.cordova.CallbackContext
 import org.apache.cordova.CordovaInterface
 import org.apache.cordova.CordovaWebView
@@ -32,12 +30,12 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         override fun callback(token: String) {
             sendPluginResult(token)
         }
+        override fun callbackNotifyApp(event: String, result: String) {
 
-        override fun callbackNotifyApp(result: String) {
-            val js = "cordova.plugins.OSFirebaseCloudMessaging.fireEvent(\"$result)"
+            val js = "cordova.plugins.OSFirebaseCloudMessaging.fireEvent(" +
+                    "\"" + event + "\"," + result + ")"
             triggerEvent(js)
         }
-
         override fun callbackSuccess() {
             sendPluginResult(true)
         }
