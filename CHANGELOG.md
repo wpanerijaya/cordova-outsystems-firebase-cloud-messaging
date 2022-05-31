@@ -8,6 +8,10 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+
+## 31-05-2022
+- Added methods for event handling in JS layer (https://outsystemsrd.atlassian.net/browse/RMET-1595, https://outsystemsrd.atlassian.net/browse/RMET-1589)
+
 ## 27-05-2022
 - Updated lib to contain GetToken and OnReceivedNotification
 
