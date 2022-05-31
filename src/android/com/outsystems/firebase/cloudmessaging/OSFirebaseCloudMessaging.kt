@@ -71,6 +71,11 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
                 "getBadge" -> {
                     getBadgeNumber()
                 }
+                "getPendingNotifications" -> {
+                    args.getBoolean(0).let { clearFromDatabase ->
+                        controller.getPendingNotifications(clearFromDatabase)
+                    }
+                }
                 else -> {}
             }
         }
