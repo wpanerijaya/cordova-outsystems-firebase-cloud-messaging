@@ -1,14 +1,17 @@
 import Foundation
+
+import OSCore
 import OSFirebaseMessagingLib
 
 @objc(OSFirebaseCloudMessaging)
-class OSFirebaseCloudMessaging: CordovaImplementation {
+class OSFirebaseCloudMessaging: CDVPlugin {
 
     var plugin: FirebaseMessagingController?
-    var callbackId:String=""
+    var callbackId: String = ""
     
     override func pluginInitialize() {
         plugin = FirebaseMessagingController(delegate:self)
+        FirebaseMessagingApplicationDelegate.shared.eventDelegate = self
     }
     
     @objc(registerDevice:)
@@ -101,15 +104,45 @@ class OSFirebaseCloudMessaging: CordovaImplementation {
 
 }
 
+// MARK: - OSCore's PlatformProtocol Methods
+extension OSFirebaseCloudMessaging: PlatformProtocol {
+    func sendResult(result: String?, error: NSError?, callBackID: String) {
+        var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+        
+        if let error = error, !error.localizedDescription.isEmpty {
+            let errorCode = String(error.code)
+            let errorMessage = error.localizedDescription
+            let errorDict = ["code": errorCode, "message": errorMessage]
+            pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: errorDict);
+        } else if let result = result {
+            pluginResult = result.isEmpty ? CDVPluginResult(status: CDVCommandStatus_OK) : CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result)
+        }
+        
+        self.commandDelegate!.send(pluginResult, callbackId: callBackID);
+    }
+    
+    func trigger(event: String, data: String) {
+        let js = "cordova.plugins.OSFirebaseCloudMessaging.fireEvent('\(event)', \(data))"
+        self.commandDelegate!.evalJs(js)
+    }
+}
 
-extension OSFirebaseCloudMessaging: FirebaseMessagingProtocol {
+// MARK: - OSFirebaseMessagingLib's FirebaseMessagingCallbackProtocol Methods
+extension OSFirebaseCloudMessaging: FirebaseMessagingCallbackProtocol {
     func callback(result: String?, error: FirebaseMessagingErrors?) {
         if let error = error {
-            self.sendResult(result: nil, error:error as NSError, callBackID: self.callbackId)
+            self.sendResult(result: nil, error: error as NSError, callBackID: self.callbackId)
         } else {
             if let result = result {
-                self.sendResult(result: result, error:nil , callBackID: self.callbackId)
+                self.sendResult(result: result, error: nil, callBackID: self.callbackId)
             }
         }
+    }
+}
+
+// MARK: - OSFirebaseMessagingLib's FirebaseMessagingEventProtocol Methods
+extension OSFirebaseCloudMessaging: FirebaseMessagingEventProtocol {
+    func event(data: String) {
+        self.trigger(event: "trigger", data: data)
     }
 }
