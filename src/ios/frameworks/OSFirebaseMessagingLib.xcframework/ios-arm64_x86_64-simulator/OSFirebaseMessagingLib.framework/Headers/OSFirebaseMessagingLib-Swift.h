@@ -197,6 +197,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreData;
 @import Foundation;
 @import ObjectiveC;
 @import UIKit;
@@ -217,6 +218,12 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="OSFirebaseMessagingLib",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
 # pragma pop_macro("any")
 #endif
+
+
+SWIFT_CLASS("_TtC22OSFirebaseMessagingLib15CoreDataManager")
+@interface CoreDataManager : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
 
 @class UIApplication;
 @class NSData;
@@ -249,6 +256,24 @@ SWIFT_CLASS("_TtC22OSFirebaseMessagingLib27FirebaseMessagingController")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+@class NSEntityDescription;
+@class NSManagedObjectContext;
+
+SWIFT_CLASS_NAMED("OSNotification")
+@interface OSNotification : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context SWIFT_UNAVAILABLE;
+@end
+
+
+@class NSString;
+
+@interface OSNotification (SWIFT_EXTENSION(OSFirebaseMessagingLib))
+@property (nonatomic, copy) NSString * _Nullable extraData;
+@property (nonatomic, copy) NSString * _Nullable messageID;
+@property (nonatomic) double timeStamp;
+@property (nonatomic, copy) NSString * _Nullable timeToLive;
+@end
 
 
 
@@ -456,6 +481,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreData;
 @import Foundation;
 @import ObjectiveC;
 @import UIKit;
@@ -476,6 +502,12 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="OSFirebaseMessagingLib",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
 # pragma pop_macro("any")
 #endif
+
+
+SWIFT_CLASS("_TtC22OSFirebaseMessagingLib15CoreDataManager")
+@interface CoreDataManager : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
 
 @class UIApplication;
 @class NSData;
@@ -508,6 +540,24 @@ SWIFT_CLASS("_TtC22OSFirebaseMessagingLib27FirebaseMessagingController")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+@class NSEntityDescription;
+@class NSManagedObjectContext;
+
+SWIFT_CLASS_NAMED("OSNotification")
+@interface OSNotification : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context SWIFT_UNAVAILABLE;
+@end
+
+
+@class NSString;
+
+@interface OSNotification (SWIFT_EXTENSION(OSFirebaseMessagingLib))
+@property (nonatomic, copy) NSString * _Nullable extraData;
+@property (nonatomic, copy) NSString * _Nullable messageID;
+@property (nonatomic) double timeStamp;
+@property (nonatomic, copy) NSString * _Nullable timeToLive;
+@end
 
 
 
