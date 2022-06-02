@@ -8,6 +8,9 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## 02-06-2022
+- Implemented silent notification app on foreground event on Android (https://outsystemsrd.atlassian.net/browse/RMET-1540, https://outsystemsrd.atlassian.net/browse/RMET-1595)
+
 ## 24-05-2022
 - Includes register and unregister for Android (https://outsystemsrd.atlassian.net/browse/RMET-1540, https://outsystemsrd.atlassian.net/browse/RMET-1541)
 
