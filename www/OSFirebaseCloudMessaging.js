@@ -36,11 +36,10 @@ exports.unregisterDevice = function (success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'unregisterDevice');
 };
 
-<<<<<<< HEAD
 exports.getPendingNotifications = function (clearFromDatabase, success, error) {
     exec(success, error, 'OSFirebaseCloudMessaging', 'getPendingNotifications', [clearFromDatabase]);
 };
-=======
+
 // Event listener
 exports._listener = {};
 
@@ -121,4 +120,3 @@ exports._listener = {};
         fn.apply(scope, args);
     }
 };
->>>>>>> d90386e65f5f8b148a455fe4ee4542fbcc7d20ef

@@ -2,6 +2,8 @@ package com.outsystems.firebase.cloudmessaging;
 
 import com.outsystems.plugins.firebasemessaging.controller.*
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
+import com.outsystems.plugins.firebasemessaging.model.database.DatabaseManager
+import com.outsystems.plugins.firebasemessaging.model.database.DatabaseManagerInterface
 import com.outsystems.plugins.oscordova.CordovaImplementation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
@@ -18,10 +20,12 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     private lateinit var notificationManager : FirebaseNotificationManagerInterface
     private lateinit var messagingManager : FirebaseMessagingManagerInterface
     private lateinit var controller : FirebaseMessagingController
+    private lateinit var databaseManager: DatabaseManagerInterface
 
     override fun initialize(cordova: CordovaInterface, webView: CordovaWebView) {
         super.initialize(cordova, webView)
-        notificationManager = FirebaseNotificationManager(cordova.activity)
+        databaseManager = DatabaseManager.getInstance(getActivity())
+        notificationManager = FirebaseNotificationManager(getActivity(), databaseManager)
         messagingManager = FirebaseMessagingManager()
         controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
     }
