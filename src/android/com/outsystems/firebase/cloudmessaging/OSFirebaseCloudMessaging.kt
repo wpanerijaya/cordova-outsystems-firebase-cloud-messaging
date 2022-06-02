@@ -23,7 +23,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         super.initialize(cordova, webView)
         notificationManager = FirebaseNotificationManager(cordova.activity)
         messagingManager = FirebaseMessagingManager()
-        controller = FirebaseMessagingController.getInstance(controllerDelegate, messagingManager, notificationManager)
+        controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
     }
 
     private val controllerDelegate = object: FirebaseMessagingInterface {
@@ -31,7 +31,6 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             sendPluginResult(token)
         }
         override fun callbackNotifyApp(event: String, result: String) {
-
             val js = "cordova.plugins.OSFirebaseCloudMessaging.fireEvent(" +
                     "\"" + event + "\"," + result + ")"
             triggerEvent(js)
