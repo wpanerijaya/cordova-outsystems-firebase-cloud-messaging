@@ -14,6 +14,12 @@ The changes documented here do not include those from the original repository.
 ## 30-05-2022
 - Added library with Room databse.
 
+## 02-06-2022
+- Implemented silent notification app on foreground event on Android (https://outsystemsrd.atlassian.net/browse/RMET-1540, https://outsystemsrd.atlassian.net/browse/
+
+## 31-05-2022
+- Added methods for event handling in JS layer (https://outsystemsrd.atlassian.net/browse/RMET-1595, https://outsystemsrd.atlassian.net/browse/RMET-1589)
+
 ## 27-05-2022
 - Updated lib to contain GetToken and OnReceivedNotification.
 
