@@ -8,6 +8,12 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## 31-05-2022
+- Added get pending notifications to both JS and bridge layers.
+
+## 30-05-2022
+- Added library with Room databse.
+
 ## 02-06-2022
 - Receive Silent Notification and Trigger Notify Event (https://outsystemsrd.atlassian.net/browse/RMET-1589).
 - Implemented silent notification app on foreground event on Android (https://outsystemsrd.atlassian.net/browse/RMET-1540, https://outsystemsrd.atlassian.net/browse/
@@ -16,8 +22,7 @@ The changes documented here do not include those from the original repository.
 - Added methods for event handling in JS layer (https://outsystemsrd.atlassian.net/browse/RMET-1595, https://outsystemsrd.atlassian.net/browse/RMET-1589)
 
 ## 27-05-2022
-- Updated lib to contain GetToken and OnReceivedNotification
-
+- Updated lib to contain GetToken and OnReceivedNotification.
 
 ## 24-05-2022
 - Includes register and unregister for Android (https://outsystemsrd.atlassian.net/browse/RMET-1540, https://outsystemsrd.atlassian.net/browse/RMET-1541)

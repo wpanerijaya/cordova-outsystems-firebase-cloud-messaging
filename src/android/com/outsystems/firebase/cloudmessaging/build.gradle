@@ -24,6 +24,8 @@ repositories{
     }
 }
 
+apply plugin: 'kotlin-kapt'
+
 dependencies {
     implementation (name:'OSCordova-Android-debug', ext:'aar')
     implementation (name:'OSFirebaseMessagingLib-debug', ext:'aar')
@@ -35,6 +37,12 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
+
+    def roomVersion = "2.4.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("android.arch.persistence.room:compiler:1.1.1")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
 }
 // use postBuildExtras to make sure the plugin is applied after
 // cdvPluginPostBuildExtras. Therefore if googleServices is added
