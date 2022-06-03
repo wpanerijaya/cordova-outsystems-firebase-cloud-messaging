@@ -6,7 +6,7 @@
 	<dict>
 		<key>Frameworks/libswift_Concurrency.dylib</key>
 		<data>
-		vYoW2Zujzp/KytzgR6NdjWtBH84=
+		eQlNh3goI+qUhWyIvMSiwCv6c48=
 		</data>
 		<key>Headers/OSFirebaseMessagingLib-Swift.h</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		R46t6t6562S8KjNtjFqTXFaRuf8=
+		amrYD9ZQCdCQfTiSrhw/uaXWaIw=
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		3p2xqn/dK4QUe7/+vpU6bHajqmQ=
+		vZH5ExX3aXLq9lXacGrsPe9xZWM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -51,7 +51,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			OxfFPcbcQsEgaVueV5iDO5pcGUe1VZWsgEbIaLn+Des=
+			QAk0JsGB+jf+RuZxMMlsk+ZobDcezKgNyayyuXQJvJ4=
 			</data>
 		</dict>
 		<key>Headers/OSFirebaseMessagingLib-Swift.h</key>
@@ -79,14 +79,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			sMW0TgoTp1INezmSpVxxF5SRLi4vSwXuCx5h82N7BlY=
+			maybx7GmDDX3DUOt+bJFiiu7v7hejrrjDWYD3Wq4YOo=
 			</data>
 		</dict>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lZgINhBY20t9SeFvfkWiQNbfwfxX/0uE1u8FPBa/fDE=
+			ubiBlBoOOlSLtIpk3hEcX5qVolnajhWYbN1kI8jjjzg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

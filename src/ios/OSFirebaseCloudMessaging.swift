@@ -53,7 +53,6 @@ class OSFirebaseCloudMessaging: CDVPlugin {
     @objc(sendLocalNotification:)
     func sendLocalNotification(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
-        
         guard
             let badge = command.arguments[0] as? Int,
             let body = command.arguments[1] as? String,
@@ -62,8 +61,10 @@ class OSFirebaseCloudMessaging: CDVPlugin {
             self.sendResult(result: "", error:FirebaseMessagingErrors.errorSendingNotification as NSError, callBackID: self.callbackId)
             return
         }
-        
-        self.plugin?.sendLocalNotification(title: title, body: body, badge: badge)
+
+        Task {
+            await self.plugin?.sendLocalNotification(title: title, body: body, badge: badge)
+        }
     }
     
     @objc(getBadge:)
