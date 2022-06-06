@@ -20,6 +20,18 @@ class OSFirebaseCloudMessaging: CDVPlugin {
         self.plugin?.registerDevice()
     }
     
+    @objc(getPendingNotifications:)
+    func getPendingNotifications(command: CDVInvokedUrlCommand) {
+        self.callbackId = command.callbackId
+
+        guard let clearFromDatabase = command.arguments[0] as? Bool else {
+            self.sendResult(result: "", error:FirebaseMessagingErrors.errorObtainingNotifications as NSError, callBackID: self.callbackId)
+            return
+        }
+        
+        self.plugin?.getPendingNotifications(clearFromDatabase: clearFromDatabase)
+    }
+    
     @objc(unregisterDevice:)
     func unregisterDevice(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
@@ -41,17 +53,18 @@ class OSFirebaseCloudMessaging: CDVPlugin {
     @objc(sendLocalNotification:)
     func sendLocalNotification(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
-        
         guard
             let badge = command.arguments[0] as? Int,
             let body = command.arguments[1] as? String,
             let title = command.arguments[2] as? String
         else {
-            self.sendResult(result: "", error:FirebaseMessagingErrors.settingBadgeNumberError as NSError, callBackID: self.callbackId)
+            self.sendResult(result: "", error:FirebaseMessagingErrors.errorSendingNotification as NSError, callBackID: self.callbackId)
             return
         }
-        
-        self.plugin?.sendLocalNotification(title: title, body: body, badge: badge)
+
+        Task {
+            await self.plugin?.sendLocalNotification(title: title, body: body, badge: badge)
+        }
     }
     
     @objc(getBadge:)

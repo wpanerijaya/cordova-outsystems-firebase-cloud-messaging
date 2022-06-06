@@ -13,8 +13,11 @@ The changes documented here do not include those from the original repository.
 
 ## 30-05-2022
 - Added library with Room databse.
+- Added library with CoreData databse.
 
 ## 02-06-2022
+- Get Pending Notificaitons implemented (https://outsystemsrd.atlassian.net/browse/RMET-1596 ).
+- Save Silent Notification in a database when the app is not opened (https://outsystemsrd.atlassian.net/browse/RMET-1603).
 - Receive Silent Notification and Trigger Notify Event (https://outsystemsrd.atlassian.net/browse/RMET-1589).
 - Implemented silent notification app on foreground event on Android (https://outsystemsrd.atlassian.net/browse/RMET-1540, https://outsystemsrd.atlassian.net/browse/
 
