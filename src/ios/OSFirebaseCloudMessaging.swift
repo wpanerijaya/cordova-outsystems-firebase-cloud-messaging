@@ -1,5 +1,4 @@
 import Foundation
-
 import OSCore
 import OSFirebaseMessagingLib
 
@@ -17,7 +16,9 @@ class OSFirebaseCloudMessaging: CDVPlugin {
     @objc(registerDevice:)
     func registerDevice(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
-        self.plugin?.registerDevice()
+        Task {
+            await self.plugin?.registerDevice()
+        }
     }
     
     @objc(getPendingNotifications:)
@@ -35,13 +36,17 @@ class OSFirebaseCloudMessaging: CDVPlugin {
     @objc(unregisterDevice:)
     func unregisterDevice(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
-        self.plugin?.unregisterDevice()
+        Task {
+            await self.plugin?.unregisterDevice()
+        }
     }
     
     @objc(getToken:)
     func getToken(command: CDVInvokedUrlCommand) {
         self.callbackId = command.callbackId
-        self.plugin?.getToken()
+        Task {
+            await self.plugin?.getToken()
+        }
     }
     
     @objc(clearNotifications:)
@@ -94,11 +99,17 @@ class OSFirebaseCloudMessaging: CDVPlugin {
         guard
             let topic = command.arguments[0] as? String
         else {
-            self.sendResult(result: "", error:FirebaseMessagingErrors.gettingBadgeNumberError as NSError, callBackID: self.callbackId)
+            self.sendResult(result: "", error:FirebaseMessagingErrors.subscriptionError as NSError, callBackID: self.callbackId)
             return
         }
         
-        self.plugin?.subscribe(topic: topic)
+        Task {
+            do {
+                try await self.plugin?.subscribe(topic)
+            } catch {
+                self.sendResult(result: "", error:FirebaseMessagingErrors.subscriptionError as NSError, callBackID: self.callbackId)
+            }
+        }
     }
     
     @objc(unsubscribe:)
@@ -112,7 +123,13 @@ class OSFirebaseCloudMessaging: CDVPlugin {
             return
         }
         
-        self.plugin?.unsubscribe(fromTopic: topic)
+        Task {
+            do {
+                try await self.plugin?.unsubscribe(fromTopic: topic)
+            } catch {
+                self.sendResult(result: "", error:FirebaseMessagingErrors.unsubscriptionError as NSError, callBackID: self.callbackId)
+            }
+        }
     }
 
 }
