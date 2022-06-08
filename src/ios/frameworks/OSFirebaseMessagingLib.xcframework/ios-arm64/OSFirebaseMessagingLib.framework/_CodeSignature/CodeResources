@@ -6,11 +6,11 @@
 	<dict>
 		<key>Frameworks/libswift_Concurrency.dylib</key>
 		<data>
-		eQlNh3goI+qUhWyIvMSiwCv6c48=
+		cz9por9ADzUp2XT0X6H3hlMqbZs=
 		</data>
 		<key>Headers/OSFirebaseMessagingLib-Swift.h</key>
 		<data>
-		S1crBpatbAqUDJulafozKRXGEmw=
+		LRS1bbpNG7C2ZhKePrZYzBoLagA=
 		</data>
 		<key>Headers/OSFirebaseMessagingLib.h</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		amrYD9ZQCdCQfTiSrhw/uaXWaIw=
+		R0NnBF/rQtXCB4JF4YA/xS8OeOg=
 		</data>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		vZH5ExX3aXLq9lXacGrsPe9xZWM=
+		sH7hIwfa4dsVB6+0DxwFn1qcG3E=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -38,11 +38,11 @@
 		</data>
 		<key>NotificationsModel.momd/NotificationsModel.mom</key>
 		<data>
-		Kt2ZUnBzwL1zX+OcJlMJNm5MPrs=
+		iWEE8kBC99zkbFOh6+8pQtndTPU=
 		</data>
 		<key>NotificationsModel.momd/VersionInfo.plist</key>
 		<data>
-		THJu5t5wk5VVlg/8972kPnVqOw0=
+		V+2zAAvIzU/UkkpVRbF/fTwy7S8=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -51,14 +51,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QAk0JsGB+jf+RuZxMMlsk+ZobDcezKgNyayyuXQJvJ4=
+			N5sgbBdXSrpek2MrrktONWv1HD05yAn+PRe52gaDAQc=
 			</data>
 		</dict>
 		<key>Headers/OSFirebaseMessagingLib-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			I7kARQoS161tkkLGZqa7In8K9O84vz8UIBN9obJXyqk=
+			5kA23u0JFZeBsNbHtscGJ577LqSd5ZEEFtLIGRSLINI=
 			</data>
 		</dict>
 		<key>Headers/OSFirebaseMessagingLib.h</key>
@@ -79,14 +79,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			maybx7GmDDX3DUOt+bJFiiu7v7hejrrjDWYD3Wq4YOo=
+			XROb6MAbI5J8cGlNd16GqT//h8h+cyiH6g+cobDICwY=
 			</data>
 		</dict>
 		<key>Modules/OSFirebaseMessagingLib.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ubiBlBoOOlSLtIpk3hEcX5qVolnajhWYbN1kI8jjjzg=
+			Fcfjw2jyh93IlmtxdhCs9Hou835qSNr+gdn+4jSQ3X0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -100,14 +100,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			deRve4YUAvNF0Iez6K25/f41z9qyhfPRICN0fBfkSuQ=
+			oVbJJXIVyr1VcLJzB6Fy6tXhT2fSFFlImC4PupiOdyc=
 			</data>
 		</dict>
 		<key>NotificationsModel.momd/VersionInfo.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Bdnr5SO9m5wgmprPJ24QFKkcL4y4DtVpEP5bNxHNP6k=
+			NfhYxXEzJhPyml1Z/n13gpy7dJ0GIj411paSRcpR8p8=
 			</data>
 		</dict>
 	</dict>

@@ -257,7 +257,6 @@ SWIFT_CLASS("_TtC22OSFirebaseMessagingLib27FirebaseMessagingController")
 @end
 
 
-
 SWIFT_CLASS("_TtC22OSFirebaseMessagingLib19NotificationManager")
 @interface NotificationManager : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -268,19 +267,43 @@ SWIFT_CLASS("_TtC22OSFirebaseMessagingLib19NotificationManager")
 @class NSEntityDescription;
 @class NSManagedObjectContext;
 
+SWIFT_CLASS_NAMED("OSExtraData")
+@interface OSExtraData : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context SWIFT_UNAVAILABLE;
+@end
+
+
+@class NSString;
+@class OSNotification;
+
+@interface OSExtraData (SWIFT_EXTENSION(OSFirebaseMessagingLib))
+@property (nonatomic, copy) NSString * _Nullable key;
+@property (nonatomic, copy) NSString * _Nullable value;
+@property (nonatomic, strong) OSNotification * _Nullable notification;
+@end
+
+
 SWIFT_CLASS_NAMED("OSNotification")
 @interface OSNotification : NSManagedObject
 - (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context SWIFT_UNAVAILABLE;
 @end
 
 
-@class NSString;
+@class NSSet;
 
 @interface OSNotification (SWIFT_EXTENSION(OSFirebaseMessagingLib))
-@property (nonatomic, copy) NSString * _Nullable extraData;
+- (void)addExtraDataListObject:(OSExtraData * _Nonnull)value;
+- (void)removeExtraDataListObject:(OSExtraData * _Nonnull)value;
+- (void)addExtraDataList:(NSSet * _Nonnull)values;
+- (void)removeExtraDataList:(NSSet * _Nonnull)values;
+@end
+
+
+@interface OSNotification (SWIFT_EXTENSION(OSFirebaseMessagingLib))
 @property (nonatomic, copy) NSString * _Nullable messageID;
 @property (nonatomic) double timeStamp;
 @property (nonatomic, copy) NSString * _Nullable timeToLive;
+@property (nonatomic, strong) NSSet * _Nullable extraDataList;
 @end
 
 
@@ -549,7 +572,6 @@ SWIFT_CLASS("_TtC22OSFirebaseMessagingLib27FirebaseMessagingController")
 @end
 
 
-
 SWIFT_CLASS("_TtC22OSFirebaseMessagingLib19NotificationManager")
 @interface NotificationManager : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -560,19 +582,43 @@ SWIFT_CLASS("_TtC22OSFirebaseMessagingLib19NotificationManager")
 @class NSEntityDescription;
 @class NSManagedObjectContext;
 
+SWIFT_CLASS_NAMED("OSExtraData")
+@interface OSExtraData : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context SWIFT_UNAVAILABLE;
+@end
+
+
+@class NSString;
+@class OSNotification;
+
+@interface OSExtraData (SWIFT_EXTENSION(OSFirebaseMessagingLib))
+@property (nonatomic, copy) NSString * _Nullable key;
+@property (nonatomic, copy) NSString * _Nullable value;
+@property (nonatomic, strong) OSNotification * _Nullable notification;
+@end
+
+
 SWIFT_CLASS_NAMED("OSNotification")
 @interface OSNotification : NSManagedObject
 - (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context SWIFT_UNAVAILABLE;
 @end
 
 
-@class NSString;
+@class NSSet;
 
 @interface OSNotification (SWIFT_EXTENSION(OSFirebaseMessagingLib))
-@property (nonatomic, copy) NSString * _Nullable extraData;
+- (void)addExtraDataListObject:(OSExtraData * _Nonnull)value;
+- (void)removeExtraDataListObject:(OSExtraData * _Nonnull)value;
+- (void)addExtraDataList:(NSSet * _Nonnull)values;
+- (void)removeExtraDataList:(NSSet * _Nonnull)values;
+@end
+
+
+@interface OSNotification (SWIFT_EXTENSION(OSFirebaseMessagingLib))
 @property (nonatomic, copy) NSString * _Nullable messageID;
 @property (nonatomic) double timeStamp;
 @property (nonatomic, copy) NSString * _Nullable timeToLive;
+@property (nonatomic, strong) NSSet * _Nullable extraDataList;
 @end
 
 
