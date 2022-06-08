@@ -8,6 +8,10 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## 08-06-2022
+- Save silent notification in DB when app is not on foreground - android (https://outsystemsrd.atlassian.net/browse/RMET-1604).
+- Silent notifications to send event when app is on foreground - android (https://outsystemsrd.atlassian.net/browse/RMET-1595).
+
 ## 31-05-2022
 - Added get pending notifications to both JS and bridge layers.
 
