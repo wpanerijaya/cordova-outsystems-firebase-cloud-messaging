@@ -16,6 +16,7 @@ The changes documented here do not include those from the original repository.
 
 ## 15-06-2022
 - Implements an event which is triggered when a notification is received.(https://outsystemsrd.atlassian.net/browse/RMET-1610)
+- Receive and trigger a Dialog Notification (https://outsystemsrd.atlassian.net/browse/RMET-1609).
 
 ## 08-06-2022
 - Save silent notification in DB when app is not on foreground - android (https://outsystemsrd.atlassian.net/browse/RMET-1604).
