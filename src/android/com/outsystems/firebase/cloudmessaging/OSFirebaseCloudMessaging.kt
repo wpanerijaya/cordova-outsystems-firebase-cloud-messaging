@@ -28,6 +28,8 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         notificationManager = FirebaseNotificationManager(getActivity(), databaseManager)
         messagingManager = FirebaseMessagingManager()
         controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
+        
+        setupChannelNameAndDescription()
     }
 
     private val controllerDelegate = object: FirebaseMessagingInterface {
@@ -126,4 +128,22 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     private fun setBadgeNumber() {
         controller.setBadgeNumber()
     }
+
+    private fun setupChannelNameAndDescription(){
+        val channelName = getActivity().getString(getStringResourceId("notification_channel_name"))
+        val channelDescription = getActivity().getString(getStringResourceId("notification_channel_description"))
+        
+        if(!channelName.isNullOrEmpty()){
+            //save it in the system preferences for later use
+        }
+        if(!channelDescription.isNullOrEmpty()){
+            //save it in the system preferences for later use
+        }
+        
+    }
+
+    private fun getStringResourceId(typeAndName: String): Int {
+        return getActivity().resources.getIdentifier(typeAndName, "string", getActivity().packageName)
+    }
+
 }
