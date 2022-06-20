@@ -17,15 +17,25 @@ module.exports = function (context) {
     var dataTags = etreeStrings.findall('./string[@name="notification_channel_name"]');
     for (var i = 0; i < dataTags.length; i++) {
         var data = dataTags[i];
-        data.text = channelName;
+        if(channelName != ""){
+            data.text = channelName;
+        }
+        else{
+            data.remove(data);
+        }
     }
 
     var dataTagsSecond = etreeStrings.findall('./string[@name="notification_channel_description"]');
     for (var i = 0; i < dataTagsSecond.length; i++) {
         var data = dataTagsSecond[i];
-        data.text = channelDescription;
+        if(channelDescription != ""){
+            data.text = channelDescription;
+        }
+        else{
+            data.remove(data);
+        }
     }
-
+    
     var resultXmlStrings = etreeStrings.write();
     fs.writeFileSync(stringsXmlPath, resultXmlStrings);
 };
