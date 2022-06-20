@@ -19,9 +19,14 @@ module.exports = function (context) {
     var stringsXmlPath = path.join(projectRoot, 'platforms/android/app/src/main/res/values/strings.xml');
     var stringsXmlContents = fs.readFileSync(stringsXmlPath).toString();
 
+    console.log("string.xml: " + stringsXmlContents);
+
     var etreeStrings = et.parse(stringsXmlContents);
 
     var dataTags = etreeStrings.findall('./resources/string[@name="notification_channel_name"]');
+
+    console.log("dataTags: " + dataTags);
+
     for (var i = 0; i < dataTags.length; i++) {
         console.log("entrou no dataTags");
         var data = dataTags[i];
@@ -29,6 +34,9 @@ module.exports = function (context) {
     }
 
     var dataTagsSecond = etreeStrings.findall('./resources/string[@name="notification_channel_description"]');
+
+    console.log("dataTags: " + dataTagsSecond);
+
     for (var i = 0; i < dataTagsSecond.length; i++) {
         console.log("entrou no dataTagsSecond");
         var data = dataTagsSecond[i];
