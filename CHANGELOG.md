@@ -14,6 +14,9 @@ The changes documented here do not include those from the original repository.
 ## 21-06-2022
 - Allow default values for channel name and description (https://outsystemsrd.atlassian.net/browse/RMET-1612).
 
+## 20-06-2022
+- Process deep link received in Notification (https://outsystemsrd.atlassian.net/browse/RMET-1605).
+
 ## 15-06-2022
 - Implements an event which is triggered when a notification is received.(https://outsystemsrd.atlassian.net/browse/RMET-1610)
 - Receive and trigger a Dialog Notification (https://outsystemsrd.atlassian.net/browse/RMET-1609).
