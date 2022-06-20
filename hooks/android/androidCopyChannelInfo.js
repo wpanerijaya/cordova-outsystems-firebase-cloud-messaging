@@ -18,27 +18,13 @@ module.exports = function (context) {
     var dataTags = etreeStrings.findall('./string[@name="notification_channel_name"]');
     for (var i = 0; i < dataTags.length; i++) {
         var data = dataTags[i];
-        if(channelName != ""){
-            console.log("1 - entrou no if")
-            data.text = channelName;
-        }
-        else{
-            console.log("1 - entrou no else")
-            data.remove(data);
-        }
+        data.text = channelName;
     }
 
     var dataTagsSecond = etreeStrings.findall('./string[@name="notification_channel_description"]');
     for (var i = 0; i < dataTagsSecond.length; i++) {
         var data = dataTagsSecond[i];
-        if(channelDescription != ""){
-            console.log("2 - entrou no if")
-            data.text = channelDescription;
-        }
-        else{
-            console.log("2 - entrou no else")
-            data.remove(data);
-        }
+        data.text = channelDescription;
     }
     
     var resultXmlStrings = etreeStrings.write();
