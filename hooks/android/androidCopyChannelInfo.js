@@ -19,17 +19,14 @@ module.exports = function (context) {
     var parser = new DOMParser();
     var xmlDoc = parser.parseFromString(stringsXmlContents);
 
-    var obj = plist.parse(fs.readFileSync(infoPlistPath, 'utf8'));
+    newElement = xmlDoc.createElement("string");
+    newText = xmlDoc.createTextNode(channelName);
+    newElement.appendChild(newText);
 
-    if(enableAppTracking == "true" || enableAppTracking == ""){
-        var userTrackingDescription = configParser.getPlatformPreference("USER_TRACKING_DESCRIPTION_IOS", "ios");
-        if(userTrackingDescription != ""){
-            obj['NSUserTrackingUsageDescription'] = userTrackingDescription;
-            fs.writeFileSync(infoPlistPath, plist.build(obj));
-        }
-    }
-    else if(enableAppTracking == "false"){
-        delete obj['NSUserTrackingUsageDescription'];
-        fs.writeFileSync(infoPlistPath, plist.build(obj));
-    }
+    xmlDoc.getElementsByTagName("resources")[0].appendChild(newElement);
+
+    var serializer = new XMLSerializer();
+    var xmlString = serializer.serializeToString(xmlDoc);
+
+    fs.writeFileSync(stringsXmlPath, xmlString)
 };
