@@ -7,8 +7,8 @@ module.exports = function (context) {
     var projectRoot = context.opts.cordova.project ? context.opts.cordova.project.root : context.opts.projectRoot;
     var configXML = path.join(projectRoot, 'config.xml');
     var configParser = new ConfigParser(configXML);
-    var channelName = configParser.getPlatformPreference("NotificationChannelName", "android");
-    var channelDescription = configParser.getPlatformPreference("NotificationChannelDescription", "android");
+    var channelName = configParser.getPlatformPreference("NotificationChannelDefaultName", "android");
+    var channelDescription = configParser.getPlatformPreference("NotificationChannelDefaultDescription", "android");
 
     var appNamePath = path.join(projectRoot, 'config.xml');
     var appNameParser = new ConfigParser(appNamePath);
