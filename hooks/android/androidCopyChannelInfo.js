@@ -33,7 +33,7 @@ module.exports = function (context) {
         data.text = channelName;
     }
 
-    var dataTagsSecond = etreeStrings.findall('./resources/string[@name="notification_channel_description"]');
+    var dataTagsSecond = etreeStrings.findall('./string[@name="notification_channel_description"]');
 
     console.log("dataTags: " + dataTagsSecond);
 
