@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const plist = require('plist');
+const et = require('elementtree');
 const { ConfigParser } = require('cordova-common');
 
 module.exports = function (context) {
@@ -14,19 +14,22 @@ module.exports = function (context) {
     var appNameParser = new ConfigParser(appNamePath);
     var appName = appNameParser.name();
     var stringsXmlPath = path.join(projectRoot, 'platforms/android/app/src/main/res/values/strings.xml');
-    var stringsXmlContents = fs.readFileSync(stringsXmlPath, 'utf8');
+    var stringsXmlContents = fs.readFileSync(stringsXmlPath).toString();
 
-    var parser = new DOMParser();
-    var xmlDoc = parser.parseFromString(stringsXmlContents);
+    var etreeStrings = et.parse(stringsXmlContents);
 
-    newElement = xmlDoc.createElement("string");
-    newText = xmlDoc.createTextNode(channelName);
-    newElement.appendChild(newText);
+    var dataTags = etreeStrings.findall('./resources/string[@name="notification_channel_name"]');
+    for (var i = 0; i < dataTags.length; i++) {
+        var data = dataTags[i];
+        data.text = channelName;
+    }
 
-    xmlDoc.getElementsByTagName("resources")[0].appendChild(newElement);
+    var dataTagsSecond = etreeStrings.findall('./resources/string[@name="notification_channel_description"]');
+    for (var i = 0; i < dataTagsSecond.length; i++) {
+        var data = dataTagsSecond[i];
+        data.text = channelDescription;
+    }
 
-    var serializer = new XMLSerializer();
-    var xmlString = serializer.serializeToString(xmlDoc);
-
-    fs.writeFileSync(stringsXmlPath, xmlString)
+    var resultXmlStrings = etreeStrings.write();
+    fs.writeFileSync(stringsXmlPath, resultXmlStrings);
 };

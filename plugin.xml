@@ -62,6 +62,11 @@
 
     <config-file parent="/*" target="AndroidManifest.xml"/>
 
+    <config-file parent="/resources" target="res/values/strings.xml">
+      <string name="notification_channel_name">Channel name</string>
+      <string name="notification_channel_description">Channel description</string>
+    </config-file>
+
     <source-file src="src/android/com/outsystems/firebase/cloudmessaging/OSFirebaseCloudMessaging.kt" target-dir="app/src/main/kotlin/com/outsystems/firebase/cloudmessaging"/>
     <resource-file src="src/android/lib/OSCordova-Android-debug.aar" target="libs/OSCordova-Android-debug.aar" />
     <resource-file src="src/android/lib/OSFirebaseMessagingLib-debug.aar" target="libs/OSFirebaseMessagingLib-debug.aar" />
