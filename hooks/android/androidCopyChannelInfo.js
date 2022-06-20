@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const et = require('elementtree');
 const { ConfigParser } = require('cordova-common');
+const { Console } = require('console');
 
 module.exports = function (context) {
     var projectRoot = context.opts.cordova.project ? context.opts.cordova.project.root : context.opts.projectRoot;
@@ -9,6 +10,8 @@ module.exports = function (context) {
     var configParser = new ConfigParser(configXML);
     var channelName = configParser.getPlatformPreference("NotificationChannelDefaultName", "android");
     var channelDescription = configParser.getPlatformPreference("NotificationChannelDefaultDescription", "android");
+
+    console.log("channelName: " + channelName);
 
     var appNamePath = path.join(projectRoot, 'config.xml');
     var appNameParser = new ConfigParser(appNamePath);
@@ -20,12 +23,14 @@ module.exports = function (context) {
 
     var dataTags = etreeStrings.findall('./resources/string[@name="notification_channel_name"]');
     for (var i = 0; i < dataTags.length; i++) {
+        console.log("entrou no dataTags");
         var data = dataTags[i];
         data.text = channelName;
     }
 
     var dataTagsSecond = etreeStrings.findall('./resources/string[@name="notification_channel_description"]');
     for (var i = 0; i < dataTagsSecond.length; i++) {
+        console.log("entrou no dataTagsSecond");
         var data = dataTagsSecond[i];
         data.text = channelDescription;
     }
