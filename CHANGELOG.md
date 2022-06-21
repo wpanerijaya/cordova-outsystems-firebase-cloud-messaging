@@ -8,6 +8,9 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## 21-06-2022
+- Allow default values for channel name and description (https://outsystemsrd.atlassian.net/browse/RMET-1612).
+
 ## 08-06-2022
 - Save silent notification in DB when app is not on foreground - android (https://outsystemsrd.atlassian.net/browse/RMET-1604).
 - Silent notifications to send event when app is on foreground - android (https://outsystemsrd.atlassian.net/browse/RMET-1595).
