@@ -8,6 +8,10 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+
+## 21-06-2022
+- Allow default values for channel name and description (https://outsystemsrd.atlassian.net/browse/RMET-1612).
+
 ## 15-06-2022
 - Implements an event which is triggered when a notification is received.(https://outsystemsrd.atlassian.net/browse/RMET-1610)
 
