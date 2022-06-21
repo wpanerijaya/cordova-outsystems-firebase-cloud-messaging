@@ -1,5 +1,6 @@
 package com.outsystems.firebase.cloudmessaging;
 
+import android.content.Context
 import com.outsystems.plugins.firebasemessaging.controller.*
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.firebasemessaging.model.database.DatabaseManager
@@ -28,7 +29,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         notificationManager = FirebaseNotificationManager(getActivity(), databaseManager)
         messagingManager = FirebaseMessagingManager()
         controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
-        
+
         setupChannelNameAndDescription()
     }
 
@@ -51,7 +52,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             sendPluginResult(null, Pair(error.code, error.description))
         }
     }
-    
+
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
         this.callbackContext = callbackContext
         CoroutineScope(Default).launch {
@@ -132,18 +133,26 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     private fun setupChannelNameAndDescription(){
         val channelName = getActivity().getString(getStringResourceId("notification_channel_name"))
         val channelDescription = getActivity().getString(getStringResourceId("notification_channel_description"))
-        
+
         if(!channelName.isNullOrEmpty()){
-            //save it in the system preferences for later use
+            val editorName = getActivity().getSharedPreferences(CHANNEL_NAME_KEY, Context.MODE_PRIVATE).edit()
+            editorName.putString(CHANNEL_NAME_KEY, channelName)
+            editorName.apply()
         }
         if(!channelDescription.isNullOrEmpty()){
-            //save it in the system preferences for later use
+            val editorDescription = getActivity().getSharedPreferences(CHANNEL_DESCRIPTION_KEY, Context.MODE_PRIVATE).edit()
+            editorDescription.putString(CHANNEL_DESCRIPTION_KEY, channelDescription)
+            editorDescription.apply()
         }
-        
     }
 
     private fun getStringResourceId(typeAndName: String): Int {
         return getActivity().resources.getIdentifier(typeAndName, "string", getActivity().packageName)
+    }
+
+    companion object {
+        private const val CHANNEL_NAME_KEY = "notification_channel_name"
+        private const val CHANNEL_DESCRIPTION_KEY = "notification_channel_description"
     }
 
 }
