@@ -1,5 +1,5 @@
 #import "AppDelegate+OSFirebaseCloudMessaging.h"
-#import <OSFirebaseMessagingLib/OSFirebaseMessagingLib-Swift.h>
+#import "OutSystems-Swift.h"
 #import <objc/runtime.h>
 
 @implementation AppDelegate (OSFirebaseCloudMessaging)
