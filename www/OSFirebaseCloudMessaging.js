@@ -91,6 +91,56 @@ exports._listener = {};
 };
 
 /**
+ * Create a callback function to get executed within a specific scope.
+ *
+ * @param [ Function ] fn    The function to be exec as the callback.
+ * @param [ Object ]   scope The callback function's scope.
+ *
+ * @return [ Function ]
+ */
+exports._createCallbackFn = function (fn, scope) {
+
+    if (typeof fn != 'function')
+        return;
+
+    return function () {
+        fn.apply(scope || this, arguments);
+    };
+};
+
+/**
+ * Execute the native counterpart.
+ *
+ * @param [ String ]  action   The name of the action.
+ * @param [ Array ]   args     Array of arguments.
+ * @param [ Function] callback The callback function.
+ * @param [ Object ] scope     The scope for the function.
+ *
+ * @return [ Void ]
+ */
+exports._exec = function (action, args, callback, scope) {
+    var fn     = this._createCallbackFn(callback, scope),
+        params = [];
+
+    if (Array.isArray(args)) {
+        params = args;
+    } else if (args !== null) {
+        params.push(args);
+    }
+
+    exec(fn, null, 'OSFirebaseCloudMessaging', action, params);
+};
+
+/**
+ * Fire queued events once the device is ready and all listeners are registered.
+ *
+ * @return [ Void ]
+ */
+exports.fireQueuedEvents = function() {
+    exports._exec('ready');
+};
+
+/**
  * Fire the event with given arguments.
  *
  * @param [ String ] event The event's name.
