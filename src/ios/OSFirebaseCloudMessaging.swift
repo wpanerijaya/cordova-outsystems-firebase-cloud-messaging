@@ -22,11 +22,11 @@ class OSFirebaseCloudMessaging: CDVPlugin {
         self.deviceReady = true
         
         if let eventQueue = self.eventQueue {
-            self.commandDelegate!.run { [weak self] in
+            self.commandDelegate.run { [weak self] in
                 guard let self = self else { return }
                 
                 for js in eventQueue {
-                    self.commandDelegate!.evalJs(js)
+                    self.commandDelegate.evalJs(js)
                 }
                 self.eventQueue = nil
             }
@@ -168,14 +168,14 @@ extension OSFirebaseCloudMessaging: PlatformProtocol {
             pluginResult = result.isEmpty ? CDVPluginResult(status: CDVCommandStatus_OK) : CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result)
         }
         
-        self.commandDelegate!.send(pluginResult, callbackId: callBackID);
+        self.commandDelegate.send(pluginResult, callbackId: callBackID);
     }
     
     func trigger(event: String, data: String) {
         let js = "cordova.plugins.OSFirebaseCloudMessaging.fireEvent('\(event)', \(data))"
         
         if self.deviceReady {
-            self.commandDelegate!.evalJs(js)
+            self.commandDelegate.evalJs(js)
         } else if self.eventQueue != nil {
             self.eventQueue?.append(js)
         } else {
