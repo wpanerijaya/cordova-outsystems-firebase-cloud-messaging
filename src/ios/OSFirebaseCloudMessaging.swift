@@ -8,9 +8,29 @@ class OSFirebaseCloudMessaging: CDVPlugin {
     var plugin: FirebaseMessagingController?
     var callbackId: String = ""
     
+    var deviceReady: Bool = false
+    var eventQueue: [String]?
+    
     override func pluginInitialize() {
         plugin = FirebaseMessagingController(delegate:self)
         FirebaseMessagingApplicationDelegate.shared.eventDelegate = self
+    }
+    
+    @objc(ready:)
+    func ready(command: CDVInvokedUrlCommand) {
+        self.callbackId = command.callbackId
+        self.deviceReady = true
+        
+        if let eventQueue = self.eventQueue {
+            self.commandDelegate.run { [weak self] in
+                guard let self = self else { return }
+                
+                for js in eventQueue {
+                    self.commandDelegate.evalJs(js)
+                }
+                self.eventQueue = nil
+            }
+        }
     }
     
     @objc(registerDevice:)
@@ -148,12 +168,19 @@ extension OSFirebaseCloudMessaging: PlatformProtocol {
             pluginResult = result.isEmpty ? CDVPluginResult(status: CDVCommandStatus_OK) : CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result)
         }
         
-        self.commandDelegate!.send(pluginResult, callbackId: callBackID);
+        self.commandDelegate.send(pluginResult, callbackId: callBackID);
     }
     
     func trigger(event: String, data: String) {
         let js = "cordova.plugins.OSFirebaseCloudMessaging.fireEvent('\(event)', \(data))"
-        self.commandDelegate!.evalJs(js)
+        
+        if self.deviceReady {
+            self.commandDelegate.evalJs(js)
+        } else if self.eventQueue != nil {
+            self.eventQueue?.append(js)
+        } else {
+            self.eventQueue = [js]
+        }
     }
 }
 
@@ -172,7 +199,12 @@ extension OSFirebaseCloudMessaging: FirebaseMessagingCallbackProtocol {
 
 // MARK: - OSFirebaseMessagingLib's FirebaseMessagingEventProtocol Methods
 extension OSFirebaseCloudMessaging: FirebaseMessagingEventProtocol {
-    func event(data: String) {
-        self.trigger(event: "trigger", data: data)
+    func event(_ event: FirebaseEventType, data: String) {
+        var eventName = "notificationClick"
+        if case let .trigger(notification) = event {
+            eventName = notification == .silentNotification ? "silentNotification" : "defaultNotification"
+        }
+        
+        self.trigger(event: eventName, data: data)
     }
 }
