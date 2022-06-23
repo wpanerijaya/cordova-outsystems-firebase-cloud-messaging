@@ -1,7 +1,6 @@
 package com.outsystems.firebase.cloudmessaging;
 
 import android.content.Intent
-import android.util.Log
 import android.content.Context
 import com.outsystems.plugins.firebasemessaging.controller.*
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
