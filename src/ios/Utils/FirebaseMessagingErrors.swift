@@ -1,53 +1,53 @@
 public enum FirebaseMessagingErrors: Int, CustomNSError, LocalizedError {
     
-    case registrationError = 100
-    case unregistrationError = 101
-    case subscriptionError = 102
-    case unsubscriptionError = 103
-    case obtainingTokenError = 104
-    case deletingTokenError = 105
-    case settingBadgeNumberError = 106
-    case gettingBadgeNumberError = 107
-    case requestPermissionsError = 108
-    case permissionsDeniedByUser = 109
-    case invalidConfigurations = 110
-    case errorSendingNotification = 111
-    case errorDeletingNotifications = 112
-    case errorInsertingNotifications = 113
-    case errorObtainingNotifications = 114
+    case registrationError = 1
+    case registrationPermissionsError = 2
+    case unregistrationError = 3
+    case unregistrationDeleteTokenError = 4
+    case subscriptionError = 5
+    case unsubscriptionError = 6
+    case obtainingTokenError = 7
+    case deletingTokenError = 8
+    case settingBadgeNumberError = 9
+    case notificationsPermissionsDeniedError = 12
+    case sendNotificationsError = 14
+    case deleteNotificationsError = 15
+    case obtainSilentNotificationsError = 16
+    
+    // MARK: - errors not returned to bridge
+    case requestPermissionsError
     
     public var description: String {
         switch self {
         case .registrationError:
-            return "There was an error with the registration"
+            return "Couldn't register your device."
+        case .registrationPermissionsError:
+            return "Couldn't register your device due to lack of permissions."
         case .unregistrationError:
-            return "There was an error with the unregistration"
+            return "Couldn't unregister your device."
+        case .unregistrationDeleteTokenError:
+            return "Couldn't unregister your device due to an error while deleting the token."
         case .subscriptionError:
-            return "There was an error subscribing to topic."
+            return "Couldn't subscribe to topic."
         case .unsubscriptionError:
-            return "There was an error unsubscribing to topic."
+            return "Couldn't unsubscribe to topic."
         case .obtainingTokenError:
-            return "There was an error to obtain token."
+            return "Couldn't obtain token."
         case .deletingTokenError:
-            return "There was an error to delete token."
+            return "Couldn't delete token."
         case .settingBadgeNumberError:
-            return "There was an error to set the badge number."
-        case .gettingBadgeNumberError:
-            return "There was an error to obtain the badge number."
+            return "Couldn't set badge number."
+        case .notificationsPermissionsDeniedError:
+            return "Permission to receive notifications was denied."
+        case .sendNotificationsError:
+            return "Couldn't send notification."
+        case .deleteNotificationsError:
+            return "Couldn't delete notification."
+        case .obtainSilentNotificationsError:
+            return "Couldn't fetch silent notifications."
+            
         case .requestPermissionsError:
             return "There was an error requesting permissions to send notifications."
-        case .permissionsDeniedByUser:
-            return "Notifications permission is not granted."
-        case .invalidConfigurations:
-            return "Invalid configurations."
-        case .errorSendingNotification:
-            return "There was an error sending the notification."
-        case .errorDeletingNotifications:
-            return "There was an error deleting the notifications."
-        case .errorInsertingNotifications:
-            return "There was an error inserting the notifications."
-        case .errorObtainingNotifications:
-            return "There was an error obtaining the notifications."
         }
     }
     
