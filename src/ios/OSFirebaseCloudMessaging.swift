@@ -45,7 +45,7 @@ class OSFirebaseCloudMessaging: CDVPlugin {
         self.callbackId = command.callbackId
 
         guard let clearFromDatabase = command.arguments[0] as? Bool else {
-            self.sendResult(result: "", error:FirebaseMessagingErrors.errorObtainingNotifications as NSError, callBackID: self.callbackId)
+            self.sendResult(result: "", error:FirebaseMessagingErrors.obtainSilentNotificationsError as NSError, callBackID: self.callbackId)
             return
         }
         
@@ -82,7 +82,7 @@ class OSFirebaseCloudMessaging: CDVPlugin {
             let body = command.arguments[1] as? String,
             let title = command.arguments[2] as? String
         else {
-            self.sendResult(result: "", error:FirebaseMessagingErrors.errorSendingNotification as NSError, callBackID: self.callbackId)
+            self.sendResult(result: "", error:FirebaseMessagingErrors.sendNotificationsError as NSError, callBackID: self.callbackId)
             return
         }
 
@@ -159,7 +159,7 @@ extension OSFirebaseCloudMessaging: PlatformProtocol {
         var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
         
         if let error = error, !error.localizedDescription.isEmpty {
-            let errorCode = String(error.code)
+            let errorCode = "OS-PLUG-FCMS-\(String(format: "%04d", error.code))"
             let errorMessage = error.localizedDescription
             let errorDict = ["code": errorCode, "message": errorMessage]
             pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: errorDict);

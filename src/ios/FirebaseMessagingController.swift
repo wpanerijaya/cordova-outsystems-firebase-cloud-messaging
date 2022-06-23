@@ -47,15 +47,14 @@ open class FirebaseMessagingController: NSObject {
                 self.delegate?.callbackSuccess()
             } else {
                 let notificationsToReturn = notifications.encode()
-                if clearFromDatabase,
-                   case .failure = notificationManager.deletePendingNotifications(notifications) {
-                    self.delegate?.callbackError(error: .errorDeletingNotifications)
+                if clearFromDatabase, case .failure = notificationManager.deletePendingNotifications(notifications) {
+                    self.delegate?.callbackError(error: .deleteNotificationsError)
                 } else {
                     self.delegate?.callback(result: notificationsToReturn)
                 }
             }
         } else {
-            self.delegate?.callbackError(error: .errorObtainingNotifications)
+            self.delegate?.callbackError(error: .obtainSilentNotificationsError)
         }
     }
     
@@ -112,7 +111,7 @@ open class FirebaseMessagingController: NSObject {
     public func sendLocalNotification(title: String, body: String, badge: Int) async {
         let result = await notificationManager.sendLocalNotification(title: title, body: body, badge: badge)
         if case .failure = result {
-            self.delegate?.callbackError(error: .errorSendingNotification)
+            self.delegate?.callbackError(error: .sendNotificationsError)
         } else {
             self.delegate?.callbackSuccess()
         }
@@ -130,16 +129,18 @@ open class FirebaseMessagingController: NSObject {
     // MARK: Registration Methods
     public func registerDevice() async {
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        
         do {
             let authorized = try await self.notificationManager.requestAuthorization(options: authOptions)
             if authorized {
                 let topic = self.firebaseManager?.getGeneralTopic() ?? ""
                 try await self.subscribe(topic)
             } else {
-                throw FirebaseMessagingErrors.permissionsDeniedByUser
+                throw FirebaseMessagingErrors.notificationsPermissionsDeniedError
             }
         } catch let error as FirebaseMessagingErrors {
-            self.delegate?.callbackError(error: error)
+            let errorToThrow = error == .requestPermissionsError ? .registrationPermissionsError : error
+            self.delegate?.callbackError(error: errorToThrow)
         } catch {
             self.delegate?.callbackError(error: .registrationError)
         }
@@ -148,12 +149,20 @@ open class FirebaseMessagingController: NSObject {
     public func unregisterDevice() async {
         do {
             _ = try await self.firebaseManager?.deleteToken()
-            let topic = self.firebaseManager?.getGeneralTopic() ?? ""
+        } catch {
+            self.delegate?.callbackError(error: .unregistrationDeleteTokenError)
+            return
+        }
+        
+        let topic = self.firebaseManager?.getGeneralTopic() ?? ""
+        do {
             _ = try await self.firebaseManager?.unsubscribe(fromTopic: topic)
-            self.delegate?.callbackSuccess()
         } catch {
             self.delegate?.callbackError(error: .unregistrationError)
+            return
         }
+        
+        self.delegate?.callbackSuccess()
     }
     
 }

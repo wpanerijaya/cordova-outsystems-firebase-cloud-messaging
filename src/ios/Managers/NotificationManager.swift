@@ -2,7 +2,7 @@ import CoreData
 import UserNotifications
 
 public protocol NotificationManagerProtocol {
-    func insertNotification(notificationDict: [String: Any]) -> Result<Bool, FirebaseMessagingErrors>
+    func insertNotification(notificationDict: [String: Any]) -> Result<Bool, Error>
     func fetchNotifications() -> Result<[OSNotification], Error>
     func sendLocalNotification(title: String, body: String, badge: Int) async -> Result<Bool, Error>
 }
@@ -76,7 +76,7 @@ extension NotificationManager: NotificationManagerProtocol {
         return .success(true)
     }
     
-    public func insertNotification(notificationDict: [String: Any]) -> Result<Bool, FirebaseMessagingErrors> {
+    public func insertNotification(notificationDict: [String: Any]) -> Result<Bool, Error> {
         let decoder = JSONDecoder()
         decoder.userInfo[CodingUserInfoKey.managedObjectContext] = self.coreDataManager.context()
         do {
@@ -85,7 +85,7 @@ extension NotificationManager: NotificationManagerProtocol {
             
             try self.coreDataManager.saveContext()
         } catch {
-            return .failure(.errorInsertingNotifications)
+            return .failure(error)
         }
         
         return .success(true)
