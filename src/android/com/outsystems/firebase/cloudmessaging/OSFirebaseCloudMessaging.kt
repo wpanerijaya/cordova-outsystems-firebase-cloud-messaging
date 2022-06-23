@@ -74,7 +74,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             TODO("Not yet implemented")
         }
         override fun callbackError(error: FirebaseMessagingError) {
-            sendPluginResult(null, Pair(error.code, error.description))
+            sendPluginResult(null, Pair(formatErrorCode(error.code), error.description))
         }
     }
 
@@ -186,9 +186,14 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         return getActivity().resources.getIdentifier(typeAndName, "string", getActivity().packageName)
     }
 
+    private fun formatErrorCode(code: Int): String{
+        return ERROR_FORMAT_PREFIX + code.toString().padStart(4, '0')
+    }
+
     companion object {
         private const val CHANNEL_NAME_KEY = "notification_channel_name"
         private const val CHANNEL_DESCRIPTION_KEY = "notification_channel_description"
+        private const val ERROR_FORMAT_PREFIX = "OS-PLUG-FCMS-"
     }
 
 }
