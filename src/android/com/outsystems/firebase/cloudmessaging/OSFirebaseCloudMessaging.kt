@@ -1,5 +1,6 @@
 package com.outsystems.firebase.cloudmessaging;
 
+import android.content.Intent
 import android.content.Context
 import com.outsystems.plugins.firebasemessaging.controller.*
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
@@ -23,6 +24,9 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     private lateinit var controller : FirebaseMessagingController
     private lateinit var databaseManager: DatabaseManagerInterface
 
+    private var deviceReady: Boolean = false
+    private val eventQueue: MutableList<String> = mutableListOf()
+
     override fun initialize(cordova: CordovaInterface, webView: CordovaWebView) {
         super.initialize(cordova, webView)
         databaseManager = DatabaseManager.getInstance(getActivity())
@@ -31,6 +35,22 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         controller = FirebaseMessagingController(controllerDelegate, messagingManager, notificationManager)
 
         setupChannelNameAndDescription()
+
+        val intent = getActivity().intent
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        val extras = intent.extras
+        val extrasSize = extras?.size() ?: 0
+        if(extrasSize > 0) {
+            FirebaseMessagingOnClickActivity.notifyClickNotification(intent)
+        }
     }
 
     private val controllerDelegate = object: FirebaseMessagingInterface {
@@ -39,8 +59,13 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         }
         override fun callbackNotifyApp(event: String, result: String) {
             val js = "cordova.plugins.OSFirebaseCloudMessaging.fireEvent(" +
-                    "\"" + event + "\"," + result + ")"
-            triggerEvent(js)
+                    "\"" + event + "\"," + result + ");"
+            if(deviceReady) {
+                triggerEvent(js)
+            }
+            else {
+                eventQueue.add(js)
+            }
         }
         override fun callbackSuccess() {
             sendPluginResult(true)
@@ -53,10 +78,21 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         }
     }
 
+    private fun ready() {
+        deviceReady = true
+        eventQueue.forEach { event ->
+            triggerEvent(event)
+        }
+        eventQueue.clear()
+    }
+
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
         this.callbackContext = callbackContext
         CoroutineScope(Default).launch {
             when (action) {
+                "ready" -> {
+                    ready()
+                }
                 "getToken" -> {
                     controller.getToken()
                 }
