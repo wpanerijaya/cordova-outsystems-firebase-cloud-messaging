@@ -8,6 +8,19 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## 22-06-2022
+- Include image in local notifications. (https://outsystemsrd.atlassian.net/browse/RMET-1676).
+
+## 21-06-2022
+- Allow default values for channel name and description (https://outsystemsrd.atlassian.net/browse/RMET-1612).
+
+## 20-06-2022
+- Process deep link received in Notification (https://outsystemsrd.atlassian.net/browse/RMET-1605).
+
+## 15-06-2022
+- Implements an event which is triggered when a notification is received.(https://outsystemsrd.atlassian.net/browse/RMET-1610)
+- Receive and trigger a Dialog Notification (https://outsystemsrd.atlassian.net/browse/RMET-1609).
+
 ## 08-06-2022
 - Save silent notification in DB when app is not on foreground - android (https://outsystemsrd.atlassian.net/browse/RMET-1604).
 - Silent notifications to send event when app is on foreground - android (https://outsystemsrd.atlassian.net/browse/RMET-1595).

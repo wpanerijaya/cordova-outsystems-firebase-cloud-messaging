@@ -38,15 +38,47 @@
     </config-file>
 
 		<!-- iOS Source Files -->
-		<source-file src="src/ios/OSFirebaseCloudMessaging.swift"/>
+    <source-file src="src/ios/CoreDataManager/CoreDataManager.swift" />
+    <source-file src="src/ios/CoreDataManager/NotificationsModel.xcdatamodeld" />
+
+    <source-file src="src/ios/Extensions/Encodable+Extension.swift" />
+
+    <source-file src="src/ios/Managers/MessagingManager.swift" />
+    <source-file src="src/ios/Managers/NotificationManager.swift" />
+
+    <source-file src="src/ios/Model/OSExtraData.swift" />
+    <source-file src="src/ios/Model/OSNotification.swift" />
+
+    <source-file src="src/ios/Protocols/FirebaseMessagingProtocol.swift" />
+    <source-file src="src/ios/Protocols/MessagingProtocol.swift" />
+    <source-file src="src/ios/Protocols/UNUserNotificationCenterProtocol.swift" />
+
+    <source-file src="src/ios/Utils/FirebaseConfigurations.swift" />
+    <source-file src="src/ios/Utils/FirebaseMessagingErrors.swift" />
+    <source-file src="src/ios/Utils/FirebaseNotificationEventType.swift" />
+
+    <source-file src="src/ios/FirebaseMessagingApplicationDelegate.swift" />
+    <source-file src="src/ios/FirebaseMessagingController.swift" />
+
+		<source-file src="src/ios/OSFirebaseCloudMessaging.swift" />
     <header-file src="src/ios/AppDelegate+OSFirebaseCloudMessaging.h" />
     <source-file src="src/ios/AppDelegate+OSFirebaseCloudMessaging.m" />
     <framework src="src/ios/frameworks/OSCore.xcframework" embed="true" custom="true" />
-    <framework src="src/ios/frameworks/OSFirebaseMessagingLib.xcframework" embed="true" custom="true" />
+
+    <podspec>
+        <config>
+            <source url="https://cdn.cocoapods.org/"/>
+        </config>
+        <pods use-frameworks="true">
+            <pod name="Firebase/Messaging" spec="~> 8.6.0" />
+        </pods>
+    </podspec>
 
   </platform>
 
   <platform name="android">
+
+    <hook type="after_prepare" src="hooks/android/androidCopyChannelInfo.js" />
 
     <config-file parent="/*" target="res/xml/config.xml">
       <feature name="OSFirebaseCloudMessaging">
@@ -59,6 +91,11 @@
     </config-file>
 
     <config-file parent="/*" target="AndroidManifest.xml"/>
+
+    <config-file parent="/resources" target="res/values/strings.xml">
+      <string name="notification_channel_name">Channel name</string>
+      <string name="notification_channel_description">Channel description</string>
+    </config-file>
 
     <source-file src="src/android/com/outsystems/firebase/cloudmessaging/OSFirebaseCloudMessaging.kt" target-dir="app/src/main/kotlin/com/outsystems/firebase/cloudmessaging"/>
     <resource-file src="src/android/lib/OSCordova-Android-debug.aar" target="libs/OSCordova-Android-debug.aar" />
