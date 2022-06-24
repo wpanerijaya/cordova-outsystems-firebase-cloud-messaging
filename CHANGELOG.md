@@ -8,6 +8,9 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## 24-06-2022
+- Update for multiple callback ids.
+
 ## 23-06-2022
 - Update error codes and messages.
 

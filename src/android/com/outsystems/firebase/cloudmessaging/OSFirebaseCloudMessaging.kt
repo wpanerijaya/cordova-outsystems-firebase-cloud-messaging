@@ -17,8 +17,6 @@ import org.json.JSONArray
 
 class OSFirebaseCloudMessaging : CordovaImplementation() {
 
-    override var callbackContext: CallbackContext? = null
-
     private lateinit var notificationManager : FirebaseNotificationManagerInterface
     private lateinit var messagingManager : FirebaseMessagingManagerInterface
     private lateinit var controller : FirebaseMessagingController
@@ -26,6 +24,12 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
 
     private var deviceReady: Boolean = false
     private val eventQueue: MutableList<String> = mutableListOf()
+
+    companion object {
+        private const val CHANNEL_NAME_KEY = "notification_channel_name"
+        private const val CHANNEL_DESCRIPTION_KEY = "notification_channel_description"
+        private const val ERROR_FORMAT_PREFIX = "OS-PLUG-FCMS-"
+    }
 
     override fun initialize(cordova: CordovaInterface, webView: CordovaWebView) {
         super.initialize(cordova, webView)
@@ -54,8 +58,8 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     }
 
     private val controllerDelegate = object: FirebaseMessagingInterface {
-        override fun callback(token: String) {
-            sendPluginResult(token)
+        override fun callback(result: String, callbackId: String) {
+            sendPluginResult(result, callbackId = callbackId)
         }
         override fun callbackNotifyApp(event: String, result: String) {
             val js = "cordova.plugins.OSFirebaseCloudMessaging.fireEvent(" +
@@ -67,14 +71,14 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
                 eventQueue.add(js)
             }
         }
-        override fun callbackSuccess() {
-            sendPluginResult(true)
+        override fun callbackSuccess(callbackId: String) {
+            sendPluginResult(true, callbackId = callbackId)
         }
-        override fun callbackBadgeNumber(number: Int) {
-            TODO("Not yet implemented")
+        override fun callbackBadgeNumber(number: Int, callbackId: String) {
+            //Does nothing on android
         }
-        override fun callbackError(error: FirebaseMessagingError) {
-            sendPluginResult(null, Pair(formatErrorCode(error.code), error.description))
+        override fun callbackError(error: FirebaseMessagingError, callbackId: String) {
+            sendPluginResult(null, Pair(formatErrorCode(error.code), error.description), callbackId)
         }
     }
 
@@ -87,46 +91,47 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     }
 
     override fun execute(action: String, args: JSONArray, callbackContext: CallbackContext): Boolean {
-        this.callbackContext = callbackContext
+        super.execute(action, args, callbackContext)
+        val callbackId = callbackContext.callbackId
         CoroutineScope(Default).launch {
             when (action) {
                 "ready" -> {
                     ready()
                 }
                 "getToken" -> {
-                    controller.getToken()
+                    controller.getToken(callbackId)
                 }
                 "subscribe" -> {
                     args.getString(0)?.let { topic ->
-                        controller.subscribe(topic)
+                        controller.subscribe(topic, callbackId)
                     }
                 }
                 "unsubscribe" -> {
                     args.getString(0)?.let { topic ->
-                        controller.unsubscribe(topic)
+                        controller.unsubscribe(topic, callbackId)
                     }
                 }
                 "registerDevice" -> {
-                    controller.registerDevice()
+                    controller.registerDevice(callbackId)
                 }
                 "unregisterDevice" -> {
-                    controller.unregisterDevice()
+                    controller.unregisterDevice(callbackId)
                 }
                 "clearNotifications" -> {
-                    clearNotifications()
+                    clearNotifications(callbackId)
                 }
                 "sendLocalNotification" -> {
-                    sendLocalNotification(args)
+                    sendLocalNotification(args, callbackId)
                 }
                 "setBadge" -> {
-                    setBadgeNumber()
+                    setBadgeNumber(callbackId)
                 }
                 "getBadge" -> {
-                    getBadgeNumber()
+                    getBadgeNumber(callbackId)
                 }
                 "getPendingNotifications" -> {
                     args.getBoolean(0).let { clearFromDatabase ->
-                        controller.getPendingNotifications(clearFromDatabase)
+                        controller.getPendingNotifications(clearFromDatabase, callbackId)
                     }
                 }
                 else -> {}
@@ -138,32 +143,33 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     override fun onRequestPermissionResult(requestCode: Int,
                                            permissions: Array<String>,
                                            grantResults: IntArray) {
-        TODO("Not yet implemented")
+        // Does nothing. These permissions are not required on Android.
     }
 
     override fun areGooglePlayServicesAvailable(): Boolean {
-        TODO("Not yet implemented")
+        // Not used in this project.
+        return false
     }
 
-    private fun getBadgeNumber() {
-        controller.getBadgeNumber()
+    private fun getBadgeNumber(callbackId: String) {
+        controller.getBadgeNumber(callbackId)
     }
 
-    private fun sendLocalNotification(args : JSONArray) {
+    private fun sendLocalNotification(args : JSONArray, callbackId: String) {
         val badge = args.get(0).toString().toInt()
         val title = args.get(1).toString()
         val text = args.get(2).toString()
         val channelName = args.get(3).toString()
         val channelDescription = args.get(4).toString()
-        controller.sendLocalNotification(badge, title, text, null, channelName, channelDescription)
+        controller.sendLocalNotification(badge, title, text, null, channelName, channelDescription, callbackId)
     }
 
-    private fun clearNotifications() {
-        controller.clearNotifications()
+    private fun clearNotifications(callbackId: String) {
+        controller.clearNotifications(callbackId)
     }
 
-    private fun setBadgeNumber() {
-        controller.setBadgeNumber()
+    private fun setBadgeNumber(callbackId: String) {
+        controller.setBadgeNumber(callbackId)
     }
 
     private fun setupChannelNameAndDescription(){
@@ -186,14 +192,8 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         return getActivity().resources.getIdentifier(typeAndName, "string", getActivity().packageName)
     }
 
-    private fun formatErrorCode(code: Int): String{
+    private fun formatErrorCode(code: Int): String {
         return ERROR_FORMAT_PREFIX + code.toString().padStart(4, '0')
-    }
-
-    companion object {
-        private const val CHANNEL_NAME_KEY = "notification_channel_name"
-        private const val CHANNEL_DESCRIPTION_KEY = "notification_channel_description"
-        private const val ERROR_FORMAT_PREFIX = "OS-PLUG-FCMS-"
     }
 
 }
