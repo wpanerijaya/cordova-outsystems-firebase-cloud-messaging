@@ -1,6 +1,7 @@
-import Foundation
-
 extension Encodable {
+    
+    /// Transforms an encodable object into plain text.
+    /// - Returns: The object transformed into text. Returns empty string in case of error
     public func encode() -> String {
         let encoder = JSONEncoder()
         do {

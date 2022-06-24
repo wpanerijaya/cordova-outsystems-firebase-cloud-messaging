@@ -46,11 +46,10 @@ open class FirebaseMessagingController: NSObject {
             if notifications.isEmpty {
                 self.delegate?.callbackSuccess()
             } else {
-                let notificationsToReturn = notifications.encode()
                 if clearFromDatabase, case .failure = notificationManager.deletePendingNotifications(notifications) {
                     self.delegate?.callbackError(error: .deleteNotificationsError)
                 } else {
-                    self.delegate?.callback(result: notificationsToReturn)
+                    self.delegate?.callback(result: notifications.encode())
                 }
             }
         } else {

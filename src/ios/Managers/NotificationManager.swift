@@ -1,29 +1,54 @@
 import CoreData
 import UserNotifications
 
+/// Manages and controls sending notifications.
 public protocol NotificationManagerProtocol {
+    
+    /// Inserts a notification on to Core Data. The input notifications comes in form of a Dictionary, so it needs to be transformed into the corresponding Core Data models.
+    /// - Parameter notificationDict: Notification data.
+    /// - Returns: A boolean indicating the success of the operation or an error, in case of failure.
     func insertNotification(notificationDict: [String: Any]) -> Result<Bool, Error>
+    
+    /// Fetches the store notifications on Core Data.
+    /// - Returns: An array of notifications or an error, in case of failure.
     func fetchNotifications() -> Result<[OSNotification], Error>
+    
+    /// Sends a local notification on to the Notification Center.
+    /// - Parameters:
+    ///   - title: Main title.
+    ///   - body: Description.
+    ///   - badge: Badge to display.
+    /// - Returns: A boolean indicating the success of the operation or an error, in case of failure.
     func sendLocalNotification(title: String, body: String, badge: Int) async -> Result<Bool, Error>
 }
 
+/// Manages notification sending and storage on Core Data
 public final class NotificationManager: NSObject {
     
+    /// Protocol that manages notification-related activities.
     private let notificationCenter: UNUserNotificationCenterProtocol
+    /// Object that manages notification Core Data related activites.
     private let coreDataManager: CoreDataManager
     
+    /// Constructor method.
+    /// - Parameters:
+    ///   - coreDataManager: Manages Core Data related activites.
+    ///   - notificationCenter: Manages Notification related activities.
     init(coreDataManager: CoreDataManager, notificationCenter: UNUserNotificationCenterProtocol) {
         self.coreDataManager = coreDataManager
         self.notificationCenter = notificationCenter
         super.init()
     }
     
+    /// Convenience constructor method.
+    /// - Parameter coreDataManager: Manages CoreData related activities. Default value provided.
     public convenience init(coreDataManager: CoreDataManager = CoreDataManager()) {
-        let currentNotificationCenter = UNUserNotificationCenter.current()
-        self.init(coreDataManager: coreDataManager,
-                  notificationCenter: currentNotificationCenter)
+        self.init(coreDataManager: coreDataManager, notificationCenter: UNUserNotificationCenter.current())
     }
     
+    /// Requests user authorization for the app to notify the user via both local and remote notificataions through the notification center.
+    /// - Parameter options: Possibilities for requesting authorization to interact with the user.
+    /// - Returns: A boolean indicating the success of the operation
     func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
         do {
             return try await self.notificationCenter.requestAuthorization(options: options)
@@ -32,33 +57,14 @@ public final class NotificationManager: NSObject {
         }
     }
     
+    /// Removes all delivered notifications to the notification center.
     func removeAllDeliveredNotifications() {
         self.notificationCenter.removeAllDeliveredNotifications()
     }
     
-    public func sendLocalNotification(title: String, body: String, badge: Int) async -> Result<Bool, Error> {
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = body
-        content.badge = badge as NSNumber
-        content.sound = UNNotificationSound.default
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let identifier = "\(Int.random(in: 0 ... 1000))"
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-        
-        do {
-            _ = try await self.notificationCenter.addRequest(request: request)
-            return .success(true)
-        } catch {
-            return .failure(error)
-        }
-    }
-    
-}
-
-extension NotificationManager: NotificationManagerProtocol {
-    
+    /// Deletes all notifications provided by input from Core Data manager.
+    /// - Parameter notifications: Notifications to remove.
+    /// - Returns: A boolean indicating the success of the operation or an error, in case of failure.
     public func deletePendingNotifications(_ notifications: [OSNotification]) -> Result<Bool, Error> {
         let fetchRequest: NSFetchRequest<OSNotification> = OSNotification.fetchRequest()
         do {
@@ -76,6 +82,38 @@ extension NotificationManager: NotificationManagerProtocol {
         return .success(true)
     }
     
+}
+
+extension NotificationManager: NotificationManagerProtocol {
+    
+    /// Sends a local notification on to the notification center.
+    /// - Parameters:
+    ///   - title: Main title.
+    ///   - body: Description.
+    ///   - badge: Badge to display.
+    /// - Returns: A boolean indicating the success of the operation or an error, in case of failure.
+    public func sendLocalNotification(title: String, body: String, badge: Int) async -> Result<Bool, Error> {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.badge = badge as NSNumber
+        content.sound = UNNotificationSound.default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let identifier = "\(Int.random(in: 0 ... 1000))"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        do {
+            _ = try await self.notificationCenter.add(request)
+            return .success(true)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    /// Inserts a notification on to Core Data. The input notifications comes in form of a Dictionary, so it needs to be transformed into the corresponding Core Data models.
+    /// - Parameter notificationDict: Notification data.
+    /// - Returns: A boolean indicating the success of the operation or an error, in case of failure.
     public func insertNotification(notificationDict: [String: Any]) -> Result<Bool, Error> {
         let decoder = JSONDecoder()
         decoder.userInfo[CodingUserInfoKey.managedObjectContext] = self.coreDataManager.context()
@@ -91,15 +129,13 @@ extension NotificationManager: NotificationManagerProtocol {
         return .success(true)
     }
     
+    /// Fetches the store notifications on Core Data.
+    /// - Returns: An array of notifications or an error, in case of failure.
     public func fetchNotifications() -> Result<[OSNotification], Error> {
         let fetchRequest: NSFetchRequest<OSNotification> = OSNotification.fetchRequest()
         do {
             let notifications = try self.coreDataManager.fetch(fetchRequest)
-            if !notifications.isEmpty {
-                return .success(notifications)
-            } else {
-                return .success([])
-            }
+            return .success(notifications)            
         } catch {
             return .failure(error)
         }
