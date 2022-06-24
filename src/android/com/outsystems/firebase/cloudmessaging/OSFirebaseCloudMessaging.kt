@@ -25,6 +25,12 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     private var deviceReady: Boolean = false
     private val eventQueue: MutableList<String> = mutableListOf()
 
+    companion object {
+        private const val CHANNEL_NAME_KEY = "notification_channel_name"
+        private const val CHANNEL_DESCRIPTION_KEY = "notification_channel_description"
+        private const val ERROR_FORMAT_PREFIX = "OS-PLUG-FCMS-"
+    }
+
     override fun initialize(cordova: CordovaInterface, webView: CordovaWebView) {
         super.initialize(cordova, webView)
         databaseManager = DatabaseManager.getInstance(getActivity())
@@ -72,7 +78,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
             //Does nothing on android
         }
         override fun callbackError(error: FirebaseMessagingError, callbackId: String) {
-            sendPluginResult(null, Pair(error.code.toString(), error.description), callbackId)
+            sendPluginResult(null, Pair(formatErrorCode(error.code), error.description), callbackId)
         }
     }
 
@@ -186,9 +192,8 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
         return getActivity().resources.getIdentifier(typeAndName, "string", getActivity().packageName)
     }
 
-    companion object {
-        private const val CHANNEL_NAME_KEY = "notification_channel_name"
-        private const val CHANNEL_DESCRIPTION_KEY = "notification_channel_description"
+    private fun formatErrorCode(code: Int): String {
+        return ERROR_FORMAT_PREFIX + code.toString().padStart(4, '0')
     }
 
 }
