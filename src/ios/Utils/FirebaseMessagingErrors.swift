@@ -1,3 +1,4 @@
+/// Object that contain all specific errors that can be thrown by the app.
 public enum FirebaseMessagingErrors: Int, CustomNSError, LocalizedError {
     
     case registrationError = 1
@@ -13,10 +14,10 @@ public enum FirebaseMessagingErrors: Int, CustomNSError, LocalizedError {
     case sendNotificationsError = 14
     case deleteNotificationsError = 15
     case obtainSilentNotificationsError = 16
-    
     // MARK: - errors not returned to bridge
     case requestPermissionsError
     
+    /// The text associated to the error.
     public var description: String {
         switch self {
         case .registrationError:
@@ -51,6 +52,7 @@ public enum FirebaseMessagingErrors: Int, CustomNSError, LocalizedError {
         }
     }
     
+    /// The text associated to the error., with a fallback in case of empty text
     public var errorDescription: String? {
         return description.isEmpty ? NSLocalizedString(String(rawValue), comment: "") : description
     }

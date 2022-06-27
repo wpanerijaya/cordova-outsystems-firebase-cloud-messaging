@@ -41,6 +41,7 @@
     <source-file src="src/ios/CoreDataManager/CoreDataManager.swift" />
     <source-file src="src/ios/CoreDataManager/NotificationsModel.xcdatamodeld" />
 
+    <source-file src="src/ios/Extensions/Date+Extension.swift" />
     <source-file src="src/ios/Extensions/Encodable+Extension.swift" />
 
     <source-file src="src/ios/Managers/MessagingManager.swift" />
