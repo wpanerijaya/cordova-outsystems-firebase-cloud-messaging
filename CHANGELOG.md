@@ -8,6 +8,8 @@ The changes documented here do not include those from the original repository.
 
 ## [Unreleased]
 
+## [Version 1.0.0]
+
 ## 24-06-2022
 - Update for multiple callback ids.
 
