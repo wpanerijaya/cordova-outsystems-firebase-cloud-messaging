@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The changes documented here do not include those from the original repository.
 
-## [Unreleased]
+## [Released]
+
+## 29-06-2022
+- Removed hook that adds swift support and added the plugin as dependecy. (https://outsystemsrd.atlassian.net/browse/RMET-1680)
+
+## [Version 1.0.0]
 
 ## 24-06-2022
 - Update for multiple callback ids.

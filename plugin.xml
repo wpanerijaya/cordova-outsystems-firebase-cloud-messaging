@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<plugin id="com.outsystems.firebase.cloudmessaging" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="com.outsystems.firebase.cloudmessaging" version="1.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>OSFirebaseCloudMessaging</name>
   <description>Outsystems plugin for Firebase Cloud Messaging</description>
   <author>OutSystems Inc</author>
@@ -10,10 +10,6 @@
   <dependency id="cordova-outsystems-firebase-core" url="https://github.com/OutSystems/cordova-outsystems-firebase-core.git#1.0.0"/>
   
   <platform name="ios">
-
-    <!-- Hooks -->
-    <hook type="before_plugin_install" src="hooks/install_prerequisites.js"/>
-    <hook type="after_plugin_add" src="hooks/add_swift_support.js"/>
 
     <config-file parent="/*" target="config.xml">
       <feature name="OSFirebaseCloudMessaging">
@@ -65,6 +61,8 @@
     <header-file src="src/ios/AppDelegate+OSFirebaseCloudMessaging.h" />
     <source-file src="src/ios/AppDelegate+OSFirebaseCloudMessaging.m" />
     <framework src="src/ios/frameworks/OSCore.xcframework" embed="true" custom="true" />
+
+    <dependency id="cordova-plugin-add-swift-support" url="https://github.com/OutSystems/cordova-plugin-add-swift-support.git#2.0.3-OS1"/>
 
     <podspec>
         <config>
