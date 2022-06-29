@@ -11,10 +11,6 @@
   
   <platform name="ios">
 
-    <!-- Hooks -->
-    <hook type="before_plugin_install" src="hooks/install_prerequisites.js"/>
-    <hook type="after_plugin_add" src="hooks/add_swift_support.js"/>
-
     <config-file parent="/*" target="config.xml">
       <feature name="OSFirebaseCloudMessaging">
         <param name="ios-package" value="OSFirebaseCloudMessaging"/>
@@ -65,6 +61,8 @@
     <header-file src="src/ios/AppDelegate+OSFirebaseCloudMessaging.h" />
     <source-file src="src/ios/AppDelegate+OSFirebaseCloudMessaging.m" />
     <framework src="src/ios/frameworks/OSCore.xcframework" embed="true" custom="true" />
+
+    <dependency id="cordova-plugin-add-swift-support" url="https://github.com/OutSystems/cordova-plugin-add-swift-support.git#2.0.3-OS1"/>
 
     <podspec>
         <config>

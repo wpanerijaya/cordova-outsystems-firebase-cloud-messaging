@@ -1,6 +1,0 @@
-{
-    "dependencies": {
-        "elementtree": "0.1.7",
-        "cordova-common": "4.0.2"
-    }
-}
