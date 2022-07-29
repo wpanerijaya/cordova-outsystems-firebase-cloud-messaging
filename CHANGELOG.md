@@ -6,13 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The changes documented here do not include those from the original repository.
 
-## [Released]
+## [Version 1.0.2]
 
 ## 28-07-2022
 - Renamed classes to avoid incompatibility. (https://outsystemsrd.atlassian.net/browse/RMET-1743)
 
 ## 26-07-2022
 - Added dependency on external libs. Changed methods to sync. (https://outsystemsrd.atlassian.net/browse/RMET-1480)
+
+## [Version 1.0.1]
 
 ## 29-06-2022
 - Removed hook that adds swift support and added the plugin as dependency. (https://outsystemsrd.atlassian.net/browse/RMET-1680)
