@@ -2,12 +2,15 @@ package com.outsystems.firebase.cloudmessaging;
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import com.outsystems.osnotificationpermissions.OSNotificationPermissions
 import com.outsystems.plugins.firebasemessaging.controller.*
 import com.outsystems.plugins.firebasemessaging.model.FirebaseMessagingError
 import com.outsystems.plugins.firebasemessaging.model.database.DatabaseManager
 import com.outsystems.plugins.firebasemessaging.model.database.DatabaseManagerInterface
 import com.outsystems.plugins.oscordova.CordovaImplementation
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import org.apache.cordova.CallbackContext
 import org.apache.cordova.CordovaInterface
 import org.apache.cordova.CordovaWebView
@@ -23,11 +26,13 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
 
     private var deviceReady: Boolean = false
     private val eventQueue: MutableList<String> = mutableListOf()
+    private var notificationPermission = OSNotificationPermissions()
 
     companion object {
         private const val CHANNEL_NAME_KEY = "notification_channel_name"
         private const val CHANNEL_DESCRIPTION_KEY = "notification_channel_description"
         private const val ERROR_FORMAT_PREFIX = "OS-PLUG-FCMS-"
+        private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 123123
     }
 
     override fun initialize(cordova: CordovaInterface, webView: CordovaWebView) {
@@ -110,7 +115,7 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
                     }
                 }
                 "registerDevice" -> {
-                    controller.registerDevice()
+                    registerWithPermission()
                 }
                 "unregisterDevice" -> {
                     controller.unregisterDevice()
@@ -142,7 +147,13 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
     override fun onRequestPermissionResult(requestCode: Int,
                                            permissions: Array<String>,
                                            grantResults: IntArray) {
-        // Does nothing. These permissions are not required on Android.
+        when(requestCode) {
+            NOTIFICATION_PERMISSION_REQUEST_CODE -> {
+                CoroutineScope(IO).launch {
+                    controller.registerDevice()
+                }
+            }
+        }
     }
 
     override fun areGooglePlayServicesAvailable(): Boolean {
@@ -152,6 +163,17 @@ class OSFirebaseCloudMessaging : CordovaImplementation() {
 
     private fun getBadgeNumber() {
         controller.getBadgeNumber()
+    }
+
+    private suspend fun registerWithPermission() {
+        val hasPermission = notificationPermission.hasNotificationPermission(this)
+        if(Build.VERSION.SDK_INT < 33 || hasPermission) {
+            controller.registerDevice()
+        }
+        else {
+            notificationPermission
+                .requestNotificationPermission(this, NOTIFICATION_PERMISSION_REQUEST_CODE)
+        }
     }
 
     private fun sendLocalNotification(args : JSONArray) {
