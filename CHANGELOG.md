@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The changes documented here do not include those from the original repository.
 
-## [Unreleased]
+## [Version 1.0.5]
 
 ### 08-11-2022
 - Fix: [iOS] Replace the old `OSCore` framework for the new `OSCommonPluginLib` pod.
