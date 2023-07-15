@@ -39,7 +39,7 @@ module.exports = function(context) {
   if (cordovaAbove7) {
     var destPath = path.join(context.opts.projectRoot, "platforms", platform, "app");
     if (utils.checkIfFolderExists(destPath)) {
-      var destFilePath = path.join(destPath, fileName);
+      var destFilePath = path.join(destPath, constants.googleServices + "." + platformConfig.firebaseFileExtension);
       utils.copyFromSourceToDestPath(defer, googleServicesConfigFile, destFilePath);
     }
   }
