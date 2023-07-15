@@ -32,16 +32,15 @@ module.exports = function(context) {
     utils.handleError("No google services configuration file", defer);
   }
 
-  var sourceFilePath = path.join(targetPath, fileName);
-  var destFilePath = path.join(context.opts.plugin.dir, fileName);
+  var destFilePath = path.join(context.opts.plugin.dir, constants.googleServices + "." + platformConfig.firebaseFileExtension);
 
-  utils.copyFromSourceToDestPath(defer, sourceFilePath, destFilePath);
+  utils.copyFromSourceToDestPath(defer, googleServicesConfigFile, destFilePath);
 
   if (cordovaAbove7) {
     var destPath = path.join(context.opts.projectRoot, "platforms", platform, "app");
     if (utils.checkIfFolderExists(destPath)) {
       var destFilePath = path.join(destPath, fileName);
-      utils.copyFromSourceToDestPath(defer, sourceFilePath, destFilePath);
+      utils.copyFromSourceToDestPath(defer, googleServicesConfigFile, destFilePath);
     }
   }
       
