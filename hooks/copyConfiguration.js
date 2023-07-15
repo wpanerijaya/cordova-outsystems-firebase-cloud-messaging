@@ -31,6 +31,7 @@ module.exports = function(context) {
   if (!googleServicesConfigFile) {
     utils.handleError("No google services configuration file", defer);
   }
+  console.log(googleServicesConfigFile);
 
   var destFilePath = path.join(context.opts.plugin.dir, constants.googleServices + "." + platformConfig.firebaseFileExtension);
   console.log(destFilePath);
