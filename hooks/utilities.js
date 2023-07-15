@@ -102,7 +102,6 @@ function getConfigFile(folder, configFileName, extension) {
     for (var i = 0; i < files.length; i++) {
       if (files[i].startsWith(configFileName) && files[i].endsWith(extension)) {
           return path.join(folder, files[i]);
-        }
       }
     }
   } catch (e) {
