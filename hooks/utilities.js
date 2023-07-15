@@ -81,7 +81,7 @@ function getZipFile(folder, zipFileName) {
   try {
     var files = getFilesFromPath(folder);
     for (var i = 0; i < files.length; i++) {
-      if (files[i].startsWith(zipFileName) && files[i].endsWith(constants.zipExtension) {
+      if (files[i].startsWith(zipFileName) && files[i].endsWith(constants.zipExtension)) {
           return path.join(folder, files[i]);
       }
     }
