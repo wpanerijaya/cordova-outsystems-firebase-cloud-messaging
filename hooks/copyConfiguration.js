@@ -33,7 +33,7 @@ module.exports = function(context) {
   }
   console.log(googleServicesConfigFile);
 
-  var destFilePath = path.join(context.opts.plugin.dir, constants.googleServices, platformConfig.firebaseFileExtension);
+  var destFilePath = path.join(context.opts.plugin.dir, constants.googleServices + platformConfig.firebaseFileExtension);
   console.log(destFilePath);
 
   utils.copyFromSourceToDestPath(defer, googleServicesConfigFile, destFilePath);
@@ -41,7 +41,7 @@ module.exports = function(context) {
   if (cordovaAbove7) {
     var destPath = path.join(context.opts.projectRoot, "platforms", platform, "app");
     if (utils.checkIfFolderExists(destPath)) {
-      var destFilePath = path.join(destPath, constants.googleServices, platformConfig.firebaseFileExtension);
+      var destFilePath = path.join(destPath, constants.googleServices + platformConfig.firebaseFileExtension);
       console.log(destFilePath);
       utils.copyFromSourceToDestPath(defer, googleServicesConfigFile, destFilePath);
     }
