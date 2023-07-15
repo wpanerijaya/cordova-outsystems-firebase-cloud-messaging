@@ -10,20 +10,12 @@ var constants = {
   android: {
     platform: "android",
     wwwFolder: "assets/www",
-    firebaseFileExtension: ".json",
-    soundFileName: "push_sound.wav",
-    getSoundDestinationFolder: function() {
-      return "platforms/android/res/raw";
-    }
+    firebaseFileExtension: ".json"
   },
   ios: {
     platform: "ios",
     wwwFolder: "www",
-    firebaseFileExtension: ".plist",
-    soundFileName: "push_sound.caf",
-    getSoundDestinationFolder: function(context) {
-      return "platforms/ios/" + utils.getAppName(context) + "/Resources";
-    }
+    firebaseFileExtension: ".plist"
   },
   zipExtension: ".zip",
   folderNameSuffix: ".firebase",
