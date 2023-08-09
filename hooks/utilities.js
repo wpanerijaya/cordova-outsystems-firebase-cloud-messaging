@@ -8,12 +8,14 @@ var constants = {
   android: {
     platform: "android",
     wwwFolder: "assets/www",
-    firebaseFileExtension: ".json"
+    firebaseFileExtension: ".json",
+    googleServices: "google-services"
   },
   ios: {
     platform: "ios",
     wwwFolder: "www",
-    firebaseFileExtension: ".plist"
+    firebaseFileExtension: ".plist",
+    googleService: "GoogleService-Info"
   },
   zipExtension: ".zip",
   folderNameSuffix: ".firebase",
