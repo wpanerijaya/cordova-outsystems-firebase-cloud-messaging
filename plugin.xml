@@ -7,7 +7,7 @@
     <clobbers target="cordova.plugins.OSFirebaseCloudMessaging"/>
   </js-module>
 
-  <dependency id="cordova-outsystems-firebase-core" url="https://github.com/OutSystems/cordova-outsystems-firebase-core.git#1.0.0"/>
+  <dependency id="cordova-outsystems-firebase-core" url="https://github.com/OutSystems/cordova-outsystems-firebase-core.git#2.0.0"/>
   
   <platform name="ios">
 
@@ -62,7 +62,7 @@
 
     <hook type="after_prepare" src="hooks/android/androidCopyChannelInfo.js" />
 
-    <hook type="before_plugin_install" src="hooks/unzipAndCopyConfiguration.js" />
+    <hook type="before_plugin_install" src="hooks/copyConfiguration.js" />
     <hook type="before_plugin_install" src="hooks/android/sound/copySound.js" />
 
     <config-file parent="/*" target="res/xml/config.xml">
