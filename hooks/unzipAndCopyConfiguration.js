@@ -27,6 +27,8 @@ module.exports = function(context) {
 
   var wwwPath = utils.getResourcesFolderPath(context, platform, platformConfig);
   var sourceFolderPath = utils.getSourceFolderPath(context, wwwPath);
+
+  console.log("sourceFolderPath : " + sourceFolderPath);
   
   var googleServicesZipFile = utils.getZipFile(sourceFolderPath, constants.googleServices);
   if (!googleServicesZipFile) {
