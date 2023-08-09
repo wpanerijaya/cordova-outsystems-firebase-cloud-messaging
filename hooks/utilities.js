@@ -15,7 +15,7 @@ var constants = {
     platform: "ios",
     wwwFolder: "www",
     firebaseFileExtension: ".plist",
-    googleService: "GoogleService-Info"
+    googleServices: "GoogleService-Info"
   },
   zipExtension: ".zip",
   folderNameSuffix: ".firebase",
