@@ -81,8 +81,10 @@ function getPlatformConfigs(platform) {
 
 function getZipFile(folder, zipFileName) {
   try {
+    console.log("getZipFile Folder : " + folder);
     var files = getFilesFromPath(folder);
     for (var i = 0; i < files.length; i++) {
+      console.log("getZipFile file : " + files[i]);
       if (files[i].startsWith(zipFileName) && files[i].endsWith(constants.zipExtension)) {
           return path.join(folder, files[i]);
       }
